@@ -1,4 +1,4 @@
-package model;
+package model.Model;
 
 public class Endereco {
     private String rua;

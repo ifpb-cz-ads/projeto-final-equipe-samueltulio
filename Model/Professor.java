@@ -1,4 +1,6 @@
-package model;
+package model.Model;
+
+import model.Funcionario;
 
 import java.time.LocalDate;
 import java.util.Objects;

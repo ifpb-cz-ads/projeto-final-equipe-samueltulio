@@ -1,9 +1,9 @@
-package model;
+package model.Model;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Secretario extends Funcionario{
+public class Secretario extends Funcionario {
 
     private String tipoCargo;
     private double horarioTrabalho;

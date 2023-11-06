@@ -1,55 +1,22 @@
 package model.Model;
 
-import model.Funcionario;
-
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.Objects;
 
-public class Professor extends Funcionario {
+public class Professor extends Pessoa {
+    private double salario;
 
-    private String areaEnsino;
-    private String titulacao;
-
-    public Professor(Endereco endereco, int matricula, int cpf, String nome, String telefone, LocalDate dataAdmissao, double valorSalario, String email, String areaEnsino, String titulacao) {
-        super(endereco, matricula, cpf, nome, telefone, dataAdmissao, valorSalario, email);
-        this.areaEnsino = areaEnsino;
-        this.titulacao = titulacao;
+    public Professor(String email, String nome, String cpf, String matricula, Date dataNascimento, double salario) {
+        super(email, nome, cpf, matricula, dataNascimento);
+        this.salario = salario;
     }
 
-    public String getAreaEnsino() {
-        return areaEnsino;
+    public double getSalario() {
+        return salario;
     }
 
-    public void setAreaEnsino(String areaEnsino) {
-        this.areaEnsino = areaEnsino;
-    }
-
-    public String getTitulacao() {
-        return titulacao;
-    }
-
-    public void setTitulacao(String titulacao) {
-        this.titulacao = titulacao;
-    }
-
-
-    @Override
-    public String toString() {
-        return "Professor{" +
-                "areaEnsino='" + areaEnsino + '\'' +
-                ", titulacao='" + titulacao + '\'' +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Professor professor)) return false;
-        return Objects.equals(getAreaEnsino(), professor.getAreaEnsino()) && Objects.equals(getTitulacao(), professor.getTitulacao());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getAreaEnsino(), getTitulacao());
+    public void setSalario(double salario) {
+        this.salario = salario;
     }
 }

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AlunoDao {
-    private File file;
+    private static File file;
 
     public AlunoDao() {
         file = new File("Alunos");
@@ -22,7 +22,7 @@ public class AlunoDao {
     }
 
     //Listar Alunos
-    public List<Aluno> listarAlunos() {
+    public static List<Aluno> listarAlunos() {
 
         if (file.length() > 0) {
             try {
@@ -39,8 +39,8 @@ public class AlunoDao {
         return new ArrayList<>();
     }
 
-    //Atualizar Alunos
-    private boolean atualizarAlunos(List<Aluno> lista){
+    //Atualizar Arquivo
+    private boolean atualizarArquivo(List<Aluno> lista){
         try {
             ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file)
             );
@@ -52,10 +52,45 @@ public class AlunoDao {
         return false;
     }
 
-    public boolean addUsuario(Aluno aluno){
+
+    public boolean addAluno(Aluno aluno){
+        if(buscarPorEmail(aluno.getEmail()) == null){
+            List<Aluno> alunos = listarAlunos();
+            if(alunos.add(aluno)){
+                atualizarArquivo(alunos);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean deletarAluno(Aluno aluno){
         List<Aluno> alunos = listarAlunos();
-        if(alunos.add(aluno)){
-            atualizarAlunos(alunos);
+        if(alunos.remove(aluno)){
+            atualizarArquivo(alunos);
+            return true;
+        }
+        return false;
+    }
+
+
+    public static Aluno buscarPorEmail(String email){
+        List<Aluno> alunos = listarAlunos();
+        for(Aluno aluno: alunos){
+            if(aluno.getEmail().equals(email)){
+                return aluno;
+            }
+        }
+        return null;
+    }
+
+    public boolean atualizarAluno(Aluno aluno){
+        Aluno aluno1 = buscarPorEmail(aluno.getEmail());
+        if(aluno1 != null){
+            List<Aluno> alunos = listarAlunos();
+            alunos.remove(aluno1);
+            alunos.add(aluno);
+            atualizarArquivo(alunos);
             return true;
         }
         return false;

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DisciplinaDao {
-    private File file;
+    private static File file;
 
     public DisciplinaDao() {
         file = new File("Disciplina");
@@ -22,7 +22,7 @@ public class DisciplinaDao {
     }
 
     //Listar Disciplinas
-    public List<Disciplina> listarDisciplina() {
+    public static List<Disciplina> listarDisciplina() {
 
         if (file.length() > 0) {
             try {
@@ -39,8 +39,8 @@ public class DisciplinaDao {
         return new ArrayList<>();
     }
 
-    //Atualizar Disiciplinas
-    private boolean atualizarDisciplina(List<Disciplina> lista){
+    //Atualizar Arquivos
+    private boolean atualizarArquivo(List<Disciplina> lista){
         try {
             ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file)
             );
@@ -52,12 +52,43 @@ public class DisciplinaDao {
         return false;
     }
 
-    public boolean addDisiciplina(Disciplina disciplina){
+    public boolean addDisciplina(Disciplina disciplina){
         List<Disciplina> disciplinas = listarDisciplina();
         if(disciplinas.add(disciplina)){
-            atualizarDisciplina(disciplinas);
+            atualizarArquivo(disciplinas);
             return true;
         }
         return false;
+    }
+
+    public boolean deletarDisciplina(Disciplina disciplina){
+        List<Disciplina> disciplinas = listarDisciplina();
+        if(disciplinas.remove(disciplina)){
+            atualizarArquivo(disciplinas);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean atualizarDisciplina(Disciplina disciplina){
+        Disciplina disciplina1 = buscarPorDisciplina(disciplina.getNome());
+        if(disciplina1 != null){
+            List<Disciplina> disciplinas = listarDisciplina();
+            disciplinas.remove(disciplina1);
+            disciplinas.add(disciplina);
+            atualizarArquivo(disciplinas);
+            return true;
+        }
+        return false;
+    }
+
+    public static Disciplina buscarPorDisciplina(String nome){
+        List<Disciplina> disciplinas = listarDisciplina();
+        for(Disciplina disciplina: disciplinas){
+            if(disciplina.getNome().equals(nome)){
+                return disciplina;
+            }
+        }
+        return null;
     }
 }

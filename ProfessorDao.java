@@ -1,5 +1,6 @@
 package dao;
 
+import model.Aluno;
 import model.Professor;
 
 import java.io.*;
@@ -7,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProfessorDao {
-    private File file;
+    private static File file;
 
     public ProfessorDao() {
         file = new File("Professor");
@@ -22,7 +23,7 @@ public class ProfessorDao {
     }
 
     //Listar Professor
-    public List<Professor> listarProfessor() {
+    public static List<Professor> listarProfessor() {
 
         if (file.length() > 0) {
             try {
@@ -39,8 +40,8 @@ public class ProfessorDao {
         return new ArrayList<>();
     }
 
-    //Atualizar professor
-    private boolean atualizarProfessor(List<Professor> lista){
+    //Atualizar Arquivo
+    private boolean atualizarArquivo(List<Professor> lista){
         try {
             ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file)
             );
@@ -55,7 +56,38 @@ public class ProfessorDao {
     public boolean addProfessor(Professor professor){
         List<Professor> professors = listarProfessor();
         if(professors.add(professor)){
-            atualizarProfessor(professors);
+            atualizarArquivo(professors);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean deletarProfessor(Professor professor){
+        List<Professor> professors = listarProfessor();
+        if(professors.remove(professor)){
+            atualizarArquivo(professors);
+            return true;
+        }
+        return false;
+    }
+
+    public static Professor buscarPorProfessor(String nome){
+        List<Professor> professors = listarProfessor();
+        for(Professor professor: professors){
+            if(professor.getNome().equals(nome)){
+                return professor;
+            }
+        }
+        return null;
+    }
+
+    public boolean atualizarProfessor(Professor professor){
+        Professor professor1 = buscarPorProfessor(professor.getNome());
+        if(professor1 != null){
+            List<Professor> professors = listarProfessor();
+            professors.remove(professor1);
+            professors.add(professor);
+            atualizarArquivo(professors);
             return true;
         }
         return false;

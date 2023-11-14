@@ -39,8 +39,8 @@ public class PessoaDao {
         return new ArrayList<>();
     }
 
-    //Atualizar Pessoas
-    private boolean atualizarPessoa(List<Pessoa> lista){
+    //Atualizar Arquivo
+    private boolean atualizarArquuivo(List<Pessoa> lista){
         try {
             ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file)
             );
@@ -55,7 +55,7 @@ public class PessoaDao {
     public boolean addPessoa(Pessoa pessoa){
         List<Pessoa> pessoas = listarPessoa();
         if(pessoas.add(pessoa)){
-            atualizarPessoa(pessoas);
+            atualizarArquuivo(pessoas);
             return true;
         }
         return false;

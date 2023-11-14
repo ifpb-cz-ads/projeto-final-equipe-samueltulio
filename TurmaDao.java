@@ -1,5 +1,7 @@
 package dao;
 
+
+import model.Aluno;
 import model.Turma;
 
 import java.io.*;
@@ -39,8 +41,8 @@ public class TurmaDao {
         return new ArrayList<>();
     }
 
-    //Atualizar turma
-    private boolean atualizarTurma(List<Turma> lista){
+    //Atualizar Arquivo
+    private boolean atualizarArquivo(List<Turma> lista){
         try {
             ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file)
             );
@@ -55,9 +57,10 @@ public class TurmaDao {
     public boolean addTurma(Turma turma){
         List<Turma> turmas = listarTurma();
         if(turmas.add(turma)){
-            atualizarTurma(turmas);
+            atualizarArquivo(turmas);
             return true;
         }
         return false;
     }
+
 }

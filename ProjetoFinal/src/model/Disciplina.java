@@ -29,11 +29,4 @@ public class Disciplina implements Serializable {
         this.nota = nota;
     }
 
-    @Override
-    public String toString() {
-        return "Disciplina{" +
-                "nome='" + nome + '\'' +
-                ", nota=" + nota +
-                '}';
-    }
 }

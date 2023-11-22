@@ -1,7 +1,14 @@
 package view;
 
+import javax.swing.*;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Está funcionando.");
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new TelaPrincipal();
+            }
+        });
     }
 }

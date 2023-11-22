@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.*;
 
 public class Aluno extends Pessoa implements Serializable {
@@ -16,14 +17,14 @@ public class Aluno extends Pessoa implements Serializable {
                 '}';
     }
 
-    public Aluno(String email, String nome, String cpf, String matricula, Date dataNascimento, String turma) {
+    public Aluno(String email, String nome, String cpf, String matricula, LocalDate dataNascimento, String turma) {
         super(email, nome, cpf, matricula, dataNascimento);
         this.turma = turma;
         disciplinas = new HashSet<Disciplina>();
     }
 
-    public boolean addDisciplina(String nome, int nota) {
-        if(disciplinas.add(new Disciplina(nome, nota))) {
+    public boolean addDisciplina(String nome, int nota, String professorId) {
+        if(disciplinas.add(new Disciplina(nome, nota, professorId))) {
             return true;
         } else return false;
     }

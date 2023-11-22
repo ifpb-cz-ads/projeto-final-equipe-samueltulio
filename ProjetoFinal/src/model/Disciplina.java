@@ -7,10 +7,12 @@ public class Disciplina implements Serializable {
     private static final long serialVersionUID = 1L;
     private String nome;
     private int nota;
+    private String professorId;
 
-    public Disciplina(String nome, int nota) {
+    public Disciplina(String nome, int nota, String professorId) {
         this.nome = nome;
         this.nota = nota;
+        this.professorId = professorId;
     }
 
     public String getNome() {
@@ -27,6 +29,14 @@ public class Disciplina implements Serializable {
 
     public void setNota(int nota) {
         this.nota = nota;
+    }
+
+    public void setProfessor(String professor) {
+        this.professorId = professor;
+    }
+
+    public String getProfessor() {
+        return professorId;
     }
 
 }

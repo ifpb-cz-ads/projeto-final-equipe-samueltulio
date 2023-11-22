@@ -1,7 +1,7 @@
 package model;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Pessoa implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -9,9 +9,9 @@ public class Pessoa implements Serializable {
     private String nome;
     private String cpf;
     private String matricula;
-    private Date dataNascimento;
+    private LocalDate dataNascimento;
 
-    public Pessoa(String email, String nome, String cpf, String matricula, Date dataNascimento) {
+    public Pessoa(String email, String nome, String cpf, String matricula, LocalDate dataNascimento) {
         this.email = email;
         this.nome = nome;
         this.cpf = cpf;
@@ -51,11 +51,11 @@ public class Pessoa implements Serializable {
         this.matricula = matricula;
     }
 
-    public Date getDataNascimento() {
+    public LocalDate getDataNascimento() {
         return dataNascimento;
     }
 
-    public void setDataNascimento(Date dataNascimento) {
+    public void setDataNascimento(LocalDate dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
 

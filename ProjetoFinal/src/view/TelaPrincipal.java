@@ -1,21 +1,26 @@
 package view;
 
-import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
 
 public class TelaPrincipal {
+
+    JFrame jfrm;
+
     public TelaPrincipal() {
-        JFrame jfrm = new JFrame("Bem-vindo!");
+        //Cria JFrame para a aplicação
+        jfrm = new JFrame("Bem-Vindo, vamos começar!");
         jfrm.setLayout(new FlowLayout());
         jfrm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //jfrm.setSize(400, 200);
+        jfrm.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
-        JTabbedPane jtp = new JTabbedPane();
-        jtp.addTab("Meus Dados", new TelaLogin());
-        jtp.addTab("Turmas", new TelaLogin());
-        jtp.addTab("Alunos", new TelaLogin());
-        jfrm.add(jtp);
+        //Cria barra de menu para a aplicação
+        MenuInicial menuInicial = new MenuInicial();
+        JMenuBar jmbar = menuInicial.setMenu();
 
+        jfrm.setJMenuBar(jmbar);
         jfrm.setVisible(true);
     }
+
 }

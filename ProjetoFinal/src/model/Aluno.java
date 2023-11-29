@@ -17,7 +17,7 @@ public class Aluno extends Pessoa implements Serializable {
                 '}';
     }
 
-    public Aluno(String email, String nome, String cpf, String matricula, LocalDate dataNascimento, String turma) {
+    public Aluno(String email, String nome, String cpf, String matricula, String dataNascimento, String turma) {
         super(email, nome, cpf, matricula, dataNascimento);
         this.turma = turma;
         disciplinas = new HashSet<Disciplina>();

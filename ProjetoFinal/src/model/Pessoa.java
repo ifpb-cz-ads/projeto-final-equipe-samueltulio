@@ -11,12 +11,12 @@ public class Pessoa implements Serializable {
     private String matricula;
     private LocalDate dataNascimento;
 
-    public Pessoa(String email, String nome, String cpf, String matricula, LocalDate dataNascimento) {
+    public Pessoa(String email, String nome, String cpf, String matricula, String dataNascimento) {
         this.email = email;
         this.nome = nome;
         this.cpf = cpf;
         this.matricula = matricula;
-        this.dataNascimento = dataNascimento;
+        this.dataNascimento = LocalDate.parse(dataNascimento);
     }
 
     public String getEmail() {

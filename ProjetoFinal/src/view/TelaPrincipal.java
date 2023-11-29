@@ -87,8 +87,14 @@ public class TelaPrincipal {
             @Override
             public void actionPerformed(ActionEvent e) {
                 listProfessorTela = new ListarProfessorTela();
+
                 cardPanel.removeAll();
+
                 cardPanel.add(listProfessorTela);
+
+                cardPanel.revalidate();
+                cardPanel.repaint();
+
                 cardLayout.show(cardPanel, "telaListarProfessor");
             }
         });

@@ -1,4 +1,4 @@
-package view.components;
+package view.components.professor;
 
 import javax.swing.*;
 import java.awt.*;

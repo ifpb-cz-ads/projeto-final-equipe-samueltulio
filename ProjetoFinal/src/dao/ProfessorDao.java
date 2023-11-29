@@ -25,7 +25,7 @@ public class ProfessorDao {
     //Listar Professor
     public static List<Professor> listarProfessor() {
 
-        if (file.length() > 0) {
+        if (file != null && file.exists() && file.length() > 0) {
             try {
                 ObjectInputStream in = new ObjectInputStream(new FileInputStream(file)
                 );

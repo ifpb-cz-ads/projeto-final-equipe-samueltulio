@@ -1,6 +1,7 @@
 package view;
 
-import view.components.*;
+import view.components.professor.AdicionarProfessorTela;
+import view.components.professor.ListarProfessorTela;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -17,7 +18,9 @@ public class TelaPrincipal {
 
     public TelaPrincipal() {
         //Cria JFrame para a aplicação
-        jfrm = new JFrame("Bem-Vindo, vamos começar!");
+        ImageIcon icon = new ImageIcon("aluna.png");
+        jfrm = new JFrame("SysSchool");
+        jfrm.setIconImage(icon.getImage());
         jfrm.setLayout(new BorderLayout());
         jfrm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jfrm.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -87,9 +90,7 @@ public class TelaPrincipal {
             @Override
             public void actionPerformed(ActionEvent e) {
                 listProfessorTela = new ListarProfessorTela();
-
                 cardPanel.removeAll();
-
                 cardPanel.add(listProfessorTela);
 
                 cardPanel.revalidate();
@@ -98,6 +99,10 @@ public class TelaPrincipal {
                 cardLayout.show(cardPanel, "telaListarProfessor");
             }
         });
+
+//        UIManager.put("MenuBar.font", new Font("Arial", Font.PLAIN, 12));
+//        UIManager.put("Menu.font", new Font("Arial", Font.BOLD, 12));
+//        UIManager.put("Menu.foreground", Color.BLACK);
 
         jfrm.add(cardPanel, BorderLayout.CENTER);
         jfrm.setJMenuBar(jmbar);

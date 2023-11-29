@@ -100,10 +100,6 @@ public class TelaPrincipal {
             }
         });
 
-//        UIManager.put("MenuBar.font", new Font("Arial", Font.PLAIN, 12));
-//        UIManager.put("Menu.font", new Font("Arial", Font.BOLD, 12));
-//        UIManager.put("Menu.foreground", Color.BLACK);
-
         jfrm.add(cardPanel, BorderLayout.CENTER);
         jfrm.setJMenuBar(jmbar);
         jfrm.setVisible(true);

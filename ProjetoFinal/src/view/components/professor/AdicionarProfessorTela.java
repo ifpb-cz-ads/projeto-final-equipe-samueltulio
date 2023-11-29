@@ -7,7 +7,7 @@ public class AdicionarProfessorTela extends JPanel{
     private JFrame jfrm;
 
     public AdicionarProfessorTela() {
-        setLayout(new BorderLayout());
+        setLayout(new SpringLayout());
 
         // Painel para organizar os componentes
         JPanel panel = new JPanel();
@@ -17,7 +17,7 @@ public class AdicionarProfessorTela extends JPanel{
         JLabel jlbNome = new JLabel("Nome:");
         JTextField txtNome = new JTextField();
 
-        JLabel jlbEmail = new JLabel("Idade:");
+        JLabel jlbEmail = new JLabel("Email:");
         JTextField txtEmail = new JTextField();
 
         JLabel jlbCpf = new JLabel("CPF");

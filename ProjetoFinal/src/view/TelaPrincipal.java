@@ -82,6 +82,10 @@ public class TelaPrincipal {
                 addProfessorTela = new AdicionarProfessorTela();
                 cardPanel.removeAll();
                 cardPanel.add(addProfessorTela);
+
+                cardPanel.revalidate();
+                cardPanel.repaint();
+
                 cardLayout.show(cardPanel, "telaMatriculaProfessor");
             }
         });

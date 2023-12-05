@@ -4,14 +4,11 @@ import javax.swing.*;
 import java.awt.*;
 
 public class AdicionarProfessorTela extends JPanel{
-    private JFrame jfrm;
 
     public AdicionarProfessorTela() {
-        setLayout(new SpringLayout());
-
         // Painel para organizar os componentes
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(7, 1));
+        panel.setLayout(new GridLayout(7, 2));
 
         // Componentes
         JLabel jlbNome = new JLabel("Nome:");
@@ -34,7 +31,7 @@ public class AdicionarProfessorTela extends JPanel{
         panel.add(jlbMatricula);
         panel.add(txtMatricula);
 
-        JLabel jlbNascimento = new JLabel("Data de nascimento (apenas números)");
+        JLabel jlbNascimento = new JLabel("Data de nascimento");
         JTextField txtNascimento = new JTextField();
         panel.add(jlbNascimento);
         panel.add(txtNascimento);

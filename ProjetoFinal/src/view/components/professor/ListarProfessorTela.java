@@ -18,7 +18,7 @@ public class ListarProfessorTela extends JPanel {
         pDao = new ProfessorDao();
         listProfessor = pDao.listarProfessor();
 
-        setLayout(new SpringLayout());
+        setLayout(new GridLayout());
 
         DefaultTableModel tableModel = new DefaultTableModel(colNames, 0);
         JTable tableProfessor = new JTable(tableModel);
@@ -35,14 +35,4 @@ public class ListarProfessorTela extends JPanel {
         add(scroll, BorderLayout.CENTER);
     }
 
-//    public static void main(String[] args) {
-//        SwingUtilities.invokeLater(() -> {
-//            JFrame frame = new JFrame("Listar Professores");
-//            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//            frame.getContentPane().add(new ListarProfessorTela());
-//            frame.pack();
-//            frame.setLocationRelativeTo(null);
-//            frame.setVisible(true);
-//        });
-//    }
 }

@@ -1,6 +1,7 @@
 package view;
 
 import view.components.professor.AdicionarProfessorTela;
+import view.components.professor.DeletarProfessorTela;
 import view.components.professor.ListarProfessorTela;
 
 import java.awt.*;
@@ -15,6 +16,7 @@ public class TelaPrincipal {
     private CardLayout cardLayout;
     AdicionarProfessorTela addProfessorTela;
     ListarProfessorTela listProfessorTela;
+    DeletarProfessorTela delProfessorTela;
 
     public TelaPrincipal() {
         //Cria JFrame para a aplicação
@@ -101,6 +103,20 @@ public class TelaPrincipal {
                 cardPanel.repaint();
 
                 cardLayout.show(cardPanel, "telaListarProfessor");
+            }
+        });
+
+        deleteProfessor.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                delProfessorTela = new DeletarProfessorTela();
+                cardPanel.removeAll();
+                cardPanel.add(delProfessorTela);
+
+                cardPanel.revalidate();
+                cardPanel.repaint();
+
+                cardLayout.show(cardPanel, "telaDeletarProfessor");
             }
         });
 

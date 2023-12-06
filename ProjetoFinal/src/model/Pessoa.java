@@ -8,10 +8,10 @@ public class Pessoa implements Serializable {
     private String email;
     private String nome;
     private String cpf;
-    private String matricula;
+    private int matricula;
     private LocalDate dataNascimento;
 
-    public Pessoa(String email, String nome, String cpf, String matricula, String dataNascimento) {
+    public Pessoa(String email, String nome, String cpf, int matricula, String dataNascimento) {
         this.email = email;
         this.nome = nome;
         this.cpf = cpf;
@@ -43,11 +43,11 @@ public class Pessoa implements Serializable {
         this.cpf = cpf;
     }
 
-    public String getMatricula() {
+    public int getMatricula() {
         return matricula;
     }
 
-    public void setMatricula(String matricula) {
+    public void setMatricula(int matricula) {
         this.matricula = matricula;
     }
 

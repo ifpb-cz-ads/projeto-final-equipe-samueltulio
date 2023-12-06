@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.*;
 
 public class Turma implements Serializable {
-    private static final long serialVersionUID = 1L;
     private String serie;
     private int anoLetivo;
     private Set<Aluno> alunos;

@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.util.*;
 
 public class Aluno extends Pessoa implements Serializable {
-    private static final long serialVersionUID = 1L;
     private String turma;
     private Set<Disciplina> disciplinas;
 
@@ -17,15 +16,17 @@ public class Aluno extends Pessoa implements Serializable {
                 '}';
     }
 
-    public Aluno(String email, String nome, String cpf, String matricula, String dataNascimento, String turma) {
+    public Aluno(String email, String nome, String cpf, int matricula, String dataNascimento, String turma) {
         super(email, nome, cpf, matricula, dataNascimento);
         this.turma = turma;
         disciplinas = new HashSet<Disciplina>();
     }
 
-    public boolean addDisciplina(String nome, int nota, String professorId) {
-        if(disciplinas.add(new Disciplina(nome, nota, professorId))) {
-            return true;
-        } else return false;
-    }
+
+
+//    public boolean addDisciplina(String nome, int nota, String professorId) {
+//        if(disciplinas.add(new Disciplina(nome, nota, professorId))) {
+//            return true;
+//        } else return false;
+//    }
 }

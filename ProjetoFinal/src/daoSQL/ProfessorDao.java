@@ -19,7 +19,9 @@ public class ProfessorDao {
     }
 
     public boolean addProfessor(Professor professor) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("INSERT INTO professor VALUES (?, ?, ?, ?, ?, ?)");
+        String sql = "INSERT INTO professor VALUES (?, ?, ?, ?, ?, ?)";
+        PreparedStatement statement = connection.prepareStatement(sql);
+
         statement.setString(1, professor.getEmail());
         statement.setString(2, professor.getNome());
         statement.setString(3, professor.getCpf());
@@ -41,6 +43,21 @@ public class ProfessorDao {
 
             return rowsAffected > 0;
         }
+    }
+
+    public Professor searchProfessor(int matricula) throws SQLException {
+        String sql = "SELECT * FROM professor WHERE matricula = ?";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, matricula);
+
+        ResultSet resultSet = statement.executeQuery();
+        if(resultSet.next()) {
+            Professor professor = new Professor(resultSet.getString(1), resultSet.getString(2),
+                    resultSet.getString(3), resultSet.getInt(4), resultSet.getDate(5).toLocalDate(),
+                    resultSet.getDouble(6));
+            return professor;
+        } else return null;
+
     }
 
     public List<Professor> listProfessor() throws SQLException{

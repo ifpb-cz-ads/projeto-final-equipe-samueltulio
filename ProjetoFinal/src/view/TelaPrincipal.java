@@ -7,6 +7,7 @@ import view.components.professor.ListarProfessorTela;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import javax.swing.*;
 
 public class TelaPrincipal {
@@ -95,7 +96,13 @@ public class TelaPrincipal {
         listProfessor.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                listProfessorTela = new ListarProfessorTela();
+                try {
+                    listProfessorTela = new ListarProfessorTela();
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                } catch (ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
                 cardPanel.removeAll();
                 cardPanel.add(listProfessorTela);
 
@@ -109,7 +116,13 @@ public class TelaPrincipal {
         deleteProfessor.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                delProfessorTela = new DeletarProfessorTela();
+                try {
+                    delProfessorTela = new DeletarProfessorTela();
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                } catch (ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
                 cardPanel.removeAll();
                 cardPanel.add(delProfessorTela);
 

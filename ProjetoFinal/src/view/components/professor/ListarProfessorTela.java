@@ -1,11 +1,12 @@
 package view.components.professor;
 
-import dao.ProfessorDao;
+import daoSQL.ProfessorDao;
 import model.Professor;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.sql.SQLException;
 import java.util.List;
 
 public class ListarProfessorTela extends JPanel {
@@ -14,9 +15,9 @@ public class ListarProfessorTela extends JPanel {
     ProfessorDao pDao;
     List<Professor> listProfessor;
 
-    public ListarProfessorTela() {
+    public ListarProfessorTela() throws SQLException, ClassNotFoundException {
         pDao = new ProfessorDao();
-        listProfessor = pDao.listarProfessor();
+        listProfessor = pDao.listProfessor();
 
         setLayout(new GridLayout());
 

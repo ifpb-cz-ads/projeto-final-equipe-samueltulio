@@ -1,6 +1,7 @@
 package daoSQL;
 
 import database.ConFactory;
+import model.Aluno;
 import model.Professor;
 import model.Turma;
 
@@ -69,5 +70,22 @@ public class TurmaDao {
         }
 
         return turmas;
+    }
+
+    public List<Aluno> alunosTurma(int idTurma) throws SQLException {
+        String sql = "SELECT A.nome, A.matricula\n" +
+                "FROM (aluno A INNER JOIN alunosporturma AT on A.matricula = AT.matriculaaluno)\n" +
+                "\tINNER JOIN turma T on AT.idturma = T.idturma\n" +
+                "WHERE T.idturma = ? ";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, idTurma);
+        List<Aluno> alunos = new ArrayList<>();
+        ResultSet resultSet = statement.executeQuery();
+        while(resultSet.next()) {
+            String nome = resultSet.getString("nome");
+            int matricula = resultSet.getInt("matricula");
+            alunos.add(new Aluno(nome, matricula));
+        }
+        return alunos;
     }
 }

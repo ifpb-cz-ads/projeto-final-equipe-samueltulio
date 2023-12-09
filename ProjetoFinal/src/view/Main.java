@@ -1,8 +1,12 @@
 package view;
 
+import daoSQL.AlunoDao;
+import daoSQL.DisciplinaDao;
 import daoSQL.ProfessorDao;
 import daoSQL.TurmaDao;
 import database.ConFactory;
+import model.Aluno;
+import model.Disciplina;
 import model.Professor;
 import model.Turma;
 
@@ -21,14 +25,9 @@ public class Main {
 //        });
 
         TurmaDao daoT = new TurmaDao();
-//        daoT.addTurma(new Turma(2, "6° Ano B", 2023));
-//        daoT.deleteTurma(2);
-
-        System.out.println(daoT.listTurma());
-
-//        ProfessorDao daoP = new ProfessorDao();
-//        System.out.println(daoP.listProfessor());
-
-
+//        daoA.addAluno(new Aluno("Jose@gmail.com", "José", "33333333333", 3, "2002-10-13"));
+//        daoA.deleteAluno(3);
+//        daoA.matricularDisciplina(1, 2, 100);
+        System.out.println(daoT.alunosTurma(1));
     }
 }

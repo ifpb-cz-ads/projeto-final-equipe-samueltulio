@@ -2,31 +2,20 @@ package model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.*;
 
 public class Aluno extends Pessoa implements Serializable {
-    private String turma;
-    private Set<Disciplina> disciplinas;
+    private int turma;
 
-    @Override
-    public String toString() {
-        return "Aluno{" +
-                "turma='" + turma + '\'' +
-                ", disciplinas=" + disciplinas +
-                '}';
-    }
-
-    public Aluno(String email, String nome, String cpf, int matricula, String dataNascimento, String turma) {
-        super(email, nome, cpf, matricula, dataNascimento);
+    public Aluno(String email, String nome, String cpf, int matricula, LocalDate dataNascimento) {
+        super(email, nome, cpf, matricula, String.valueOf(dataNascimento));
         this.turma = turma;
-        disciplinas = new HashSet<Disciplina>();
     }
 
+    public Aluno(String nome, int matricula) {
+        super(nome, matricula);
+    }
 
-
-//    public boolean addDisciplina(String nome, int nota, String professorId) {
-//        if(disciplinas.add(new Disciplina(nome, nota, professorId))) {
-//            return true;
-//        } else return false;
+//    public Aluno(String nome, int matricula) {
+//        super(nome, matricula);
 //    }
 }

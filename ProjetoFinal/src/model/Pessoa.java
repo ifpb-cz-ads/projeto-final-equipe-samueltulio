@@ -19,6 +19,11 @@ public class Pessoa implements Serializable {
         this.dataNascimento = LocalDate.parse(dataNascimento);
     }
 
+    public Pessoa(String nome, int matricula) {
+        this.nome = nome;
+        this.matricula = matricula;
+    }
+
     public String getEmail() {
         return email;
     }

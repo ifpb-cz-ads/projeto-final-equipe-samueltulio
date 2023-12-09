@@ -47,6 +47,7 @@ public class ProfessorDao {
 
     public Professor searchProfessor(int matricula) throws SQLException {
         String sql = "SELECT * FROM professor WHERE matricula = ?";
+
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setInt(1, matricula);
 

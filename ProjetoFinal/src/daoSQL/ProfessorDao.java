@@ -80,4 +80,24 @@ public class ProfessorDao {
 
         return professores;
     }
+
+    public boolean disciplinaProfessor(int matriculaProfessor, int idDisciplina) throws SQLException {
+        String sql = "INSERT INTO professordisciplina VALUES (?, ?)";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, idDisciplina);
+        statement.setInt(2, matriculaProfessor);
+
+        return statement.executeUpdate()>0;
+    }
+
+    public boolean turmaProfessor(int matriculaprofessor, int idTurma) throws SQLException {
+        String sql = "INSERT INTO professoresporturma VALUES (?, ?)";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, matriculaprofessor);
+        statement.setInt(2, idTurma);
+
+        return statement.executeUpdate()>0;
+    }
+
+
 }

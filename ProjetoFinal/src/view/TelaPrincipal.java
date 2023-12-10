@@ -3,6 +3,9 @@ package view;
 import view.components.professor.AdicionarProfessorTela;
 import view.components.professor.DeletarProfessorTela;
 import view.components.professor.ListarProfessorTela;
+import view.components.turma.AdicionarTurmaTela;
+import view.components.turma.DeletarTurmaTela;
+import view.components.turma.ListarTurmaTela;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -18,6 +21,9 @@ public class TelaPrincipal {
     AdicionarProfessorTela addProfessorTela;
     ListarProfessorTela listProfessorTela;
     DeletarProfessorTela delProfessorTela;
+    AdicionarTurmaTela addTurmaTela;
+    ListarTurmaTela listTurmaTela;
+    DeletarTurmaTela delTurmaTela;
 
     public TelaPrincipal() {
         //Cria JFrame para a aplicação
@@ -130,6 +136,60 @@ public class TelaPrincipal {
                 cardPanel.repaint();
 
                 cardLayout.show(cardPanel, "telaDeletarProfessor");
+            }
+        });
+
+        addTurma.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                addTurmaTela = new AdicionarTurmaTela();
+                cardPanel.removeAll();
+                cardPanel.add(addTurmaTela);
+
+                cardPanel.revalidate();
+                cardPanel.repaint();
+
+                cardLayout.show(cardPanel, "telaAdicionarTurma");
+            }
+        });
+
+        listTurma.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    listTurmaTela = new ListarTurmaTela();
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                } catch (ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
+                cardPanel.removeAll();
+                cardPanel.add(listTurmaTela);
+
+                cardPanel.revalidate();
+                cardPanel.repaint();
+
+                cardLayout.show(cardPanel, "telaAdicionarTurma");
+            }
+        });
+
+        deleteTurma.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    delTurmaTela = new DeletarTurmaTela();
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                } catch (ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
+                cardPanel.removeAll();
+                cardPanel.add(delTurmaTela);
+
+                cardPanel.revalidate();
+                cardPanel.repaint();
+
+                cardLayout.show(cardPanel, "telaAdicionarTurma");
             }
         });
 

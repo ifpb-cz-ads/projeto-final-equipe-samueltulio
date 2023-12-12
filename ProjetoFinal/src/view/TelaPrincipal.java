@@ -1,5 +1,8 @@
 package view;
 
+import view.components.aluno.AdicionarAlunoTela;
+import view.components.aluno.DeletarAlunoTela;
+import view.components.aluno.ListarAlunoTela;
 import view.components.professor.AdicionarProfessorTela;
 import view.components.professor.DeletarProfessorTela;
 import view.components.professor.ListarProfessorTela;
@@ -24,6 +27,9 @@ public class TelaPrincipal {
     AdicionarTurmaTela addTurmaTela;
     ListarTurmaTela listTurmaTela;
     DeletarTurmaTela delTurmaTela;
+    AdicionarAlunoTela addAlunoTela;
+    ListarAlunoTela listAlunoTela;
+    DeletarAlunoTela delAlunoTela;
 
     public TelaPrincipal() {
         //Cria JFrame para a aplicação
@@ -190,6 +196,67 @@ public class TelaPrincipal {
                 cardPanel.repaint();
 
                 cardLayout.show(cardPanel, "telaAdicionarTurma");
+            }
+        });
+
+        addAluno.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                addAlunoTela = new AdicionarAlunoTela();
+                cardPanel.removeAll();
+                cardPanel.add(addAlunoTela);
+
+                cardPanel.revalidate();
+                cardPanel.repaint();
+
+                cardLayout.show(cardPanel, "telaAdicionarAluno");
+            }
+        });
+
+        listAluno.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    listAlunoTela = new ListarAlunoTela();
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                } catch (ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
+                cardPanel.removeAll();
+                cardPanel.add(listAlunoTela);
+
+                cardPanel.revalidate();
+                cardPanel.repaint();
+
+                cardLayout.show(cardPanel, "telaListarAluno");
+            }
+        });
+
+        deleteAluno.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    delAlunoTela = new DeletarAlunoTela();
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                } catch (ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
+                cardPanel.removeAll();
+                cardPanel.add(delAlunoTela);
+
+                cardPanel.revalidate();
+                cardPanel.repaint();
+
+                cardLayout.show(cardPanel, "telaListarAluno");
+            }
+        });
+
+        sairLogin.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
             }
         });
 

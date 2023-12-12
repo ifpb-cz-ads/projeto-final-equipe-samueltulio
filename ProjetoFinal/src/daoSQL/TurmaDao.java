@@ -88,4 +88,14 @@ public class TurmaDao {
         }
         return alunos;
     }
+
+    public boolean addAlunoTurma(int matAluno, int idDisciplina) throws SQLException {
+        String sql = "INSERT INTO alunosporturma VALUES (?, ?)";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, matAluno);
+        statement.setInt(2, idDisciplina);
+
+        int rowsAfected = statement.executeUpdate();
+        return rowsAfected > 0;
+    }
 }

@@ -1,8 +1,6 @@
 package view.components.turma;
 
-import daoSQL.ProfessorDao;
 import daoSQL.TurmaDao;
-import model.Professor;
 import model.Turma;
 
 import javax.swing.*;

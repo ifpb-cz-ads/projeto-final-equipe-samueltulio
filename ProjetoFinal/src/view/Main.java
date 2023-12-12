@@ -24,5 +24,7 @@ public class Main {
             }
         });
 
+//        TurmaDao daoT = new TurmaDao();
+//        daoT.addAlunoTurma(1, 2);
     }
 }

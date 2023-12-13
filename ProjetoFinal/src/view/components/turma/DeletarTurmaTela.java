@@ -4,6 +4,7 @@ import daoSQL.TurmaDao;
 import model.Turma;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,6 +14,7 @@ import java.util.List;
 public class DeletarTurmaTela extends JPanel {
     TurmaDao tDao;
     List<Turma> listTurmas;
+    String[] colNames = {"Identificador", "Série", "Ano Letivo"};
 
     public DeletarTurmaTela() throws SQLException, ClassNotFoundException {
             JPanel panel = new JPanel();
@@ -26,17 +28,20 @@ public class DeletarTurmaTela extends JPanel {
             JLabel idLbl = new JLabel("Informe o identificador da turma");
             JTextField idTxt = new JTextField();
             JButton pesquisar = new JButton("Pesquisar");
-            JLabel resultadoTxt = new JLabel();
+
+            DefaultTableModel tableModel = new DefaultTableModel(colNames, 0);
+            JTable tableTurma = new JTable(tableModel);
+
             pesquisar.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     try {
                         int id = Integer.parseInt(idTxt.getText());
                         Turma turma = tDao.searchTurma(id);
-                        resultadoTxt.setText("Você busca a turma " + String.valueOf(turma.getSerie()) + " do ano " + String.valueOf(turma.getAnoLetivo()) + " para deletar?");
+                        tableModel.addRow(new Object[]{turma.getIdTurma(), turma.getSerie(), turma.getAnoLetivo()});
                     } catch (NumberFormatException ex) {
                         // Tratamento para entrada inválida de matrícula
-                        resultadoTxt.setText("Identificador inválida");
+                        JOptionPane.showMessageDialog(null, "Turma não encontrada.");
                     } catch (SQLException ex) {
                         throw new RuntimeException(ex);
                     }
@@ -52,12 +57,13 @@ public class DeletarTurmaTela extends JPanel {
                     try {
                         int mat = Integer.parseInt(idTxt.getText());
                         if(tDao.deleteTurma(mat)) {
-                            resultadoTxt.setText("Deletado com sucesso.");
+                            JOptionPane.showMessageDialog(null, "Deletado com sucesso.");
+                            tableModel.setRowCount(0);
                         } else {
-                            resultadoTxt.setText("Falha.");
+                            JOptionPane.showMessageDialog(null, "Falha ao deletar");
                         }
                     } catch (NumberFormatException ex) {
-                        resultadoTxt.setText("Insira novamente o identificador.");
+                        JOptionPane.showMessageDialog(null, "Insira novamente a matricula.");
                     } catch (SQLException ex) {
                         throw new RuntimeException(ex);
                     }
@@ -67,7 +73,7 @@ public class DeletarTurmaTela extends JPanel {
             form.add(idLbl);
             form.add(idTxt);
             form.add(pesquisar);
-            form.add(resultadoTxt);
+            form.add(tableTurma);
             form.add(apagarProfessor);
 
             panel.add(form, BorderLayout.CENTER);

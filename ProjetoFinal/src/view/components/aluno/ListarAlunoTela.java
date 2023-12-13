@@ -2,11 +2,15 @@ package view.components.aluno;
 
 import daoSQL.AlunoDao;
 import model.Aluno;
+import model.Professor;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 
 public class ListarAlunoTela extends JPanel {
@@ -32,6 +36,48 @@ public class ListarAlunoTela extends JPanel {
         }
 
         JButton atualizar = new JButton("Atualizar");
+
+        atualizar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int rowCount = tableModel.getRowCount();
+
+                for (int i = 0; i < rowCount; i++) {
+                    String email = (String) tableModel.getValueAt(i, 0);
+                    String nome = (String) tableModel.getValueAt(i, 1);
+                    String cpf = (String) tableModel.getValueAt(i, 2);
+                    int matricula = (int) tableModel.getValueAt(i, 3);
+                    LocalDate dataNascimento = (LocalDate) tableModel.getValueAt(i, 4);
+
+                    Aluno aluno = new Aluno(email, nome, cpf, matricula, dataNascimento);
+
+                    // Atualiza o Aluno no banco de dados
+                    try {
+                        aDao.updateAluno(aluno);
+                    } catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(null, "Erro ao atualizar dados: " + ex.getMessage());
+                    }
+                }
+
+                try {
+                    aDao.connection.setAutoCommit(false);
+                    aDao.connection.commit();
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+
+                try {
+                    listAluno = aDao.listAluno();
+                    tableModel.setRowCount(0); // Limpa a tabela
+                    for (Aluno Aluno : listAluno) {
+                        tableModel.addRow(new Object[]{Aluno.getEmail(), Aluno.getNome(), Aluno.getCpf(),
+                                Aluno.getMatricula(), Aluno.getDataNascimento()});
+                    }
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, "Erro ao carregar dados: " + ex.getMessage());
+                }
+            }
+        });
 
         JScrollPane scroll = new JScrollPane(tableAluno);
         tablePane.add(scroll, BorderLayout.CENTER);

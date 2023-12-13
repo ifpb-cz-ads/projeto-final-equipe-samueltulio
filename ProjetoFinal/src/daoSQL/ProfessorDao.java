@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProfessorDao {
-    private Connection connection;
+    public Connection connection;
 
     public ProfessorDao() throws SQLException, ClassNotFoundException {
         connection = new ConFactory().getConnection();
@@ -99,5 +99,17 @@ public class ProfessorDao {
         return statement.executeUpdate()>0;
     }
 
+    public boolean updateProfessor(Professor professor) throws SQLException{
+        String sql = "UPDATE professor SET email=?, nome=?, cpf=?, dataNascimento=?, salario=? WHERE matricula=?";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, professor.getEmail());
+        statement.setString(2, professor.getNome());
+        statement.setString(3, professor.getCpf());
+        statement.setDate(4, java.sql.Date.valueOf(professor.getDataNascimento()));
+        statement.setDouble(5, professor.getSalario());
+        statement.setInt(6, professor.getMatricula());
+
+        return statement.executeUpdate()>0;
+    }
 
 }

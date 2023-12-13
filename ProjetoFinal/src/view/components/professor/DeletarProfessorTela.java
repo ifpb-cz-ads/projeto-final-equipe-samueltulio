@@ -4,9 +4,7 @@ import daoSQL.ProfessorDao;
 import model.Professor;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,6 +14,7 @@ import java.util.List;
 public class DeletarProfessorTela extends JPanel {
     ProfessorDao pDao;
     List<Professor> listProfessor;
+    String[] colNames = {"Email", "Nome", "CPF", "Matricula", "Data de nascimento", "Salário"};
 
     public DeletarProfessorTela() throws SQLException, ClassNotFoundException {
         JPanel panel = new JPanel();
@@ -29,18 +28,22 @@ public class DeletarProfessorTela extends JPanel {
         JLabel matriculaLbl = new JLabel("Informe a matricula do professor");
         JTextField matriculaTxt = new JTextField();
         JButton pesquisar = new JButton("Pesquisar");
-        JLabel resultadoTxt = new JLabel();
+
+        DefaultTableModel tableModel = new DefaultTableModel(colNames, 0);
+        JTable tableProfessor = new JTable(tableModel);
+
         pesquisar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+                    tableModel.setRowCount(0);
                     int mat = Integer.parseInt(matriculaTxt.getText());
                     Professor professor = pDao.searchProfessor(mat);
-                    System.out.println("professor");
-                    resultadoTxt.setText("Você busca o professor " + String.valueOf(professor.getNome()) + " para demitir?");
+                    tableModel.addRow(new Object[]{professor.getEmail(), professor.getNome(), professor.getCpf(),
+                            professor.getMatricula(), professor.getDataNascimento(), professor.getSalario()});
                 } catch (NumberFormatException ex) {
                     // Tratamento para entrada inválida de matrícula
-                    resultadoTxt.setText("Matrícula inválida");
+                    JOptionPane.showMessageDialog(null, "Professor não encontrado.");
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -56,12 +59,13 @@ public class DeletarProfessorTela extends JPanel {
                 try {
                     int mat = Integer.parseInt(matriculaTxt.getText());
                     if(pDao.deleteProfessor(mat)) {
-                        resultadoTxt.setText("Deletado com sucesso.");
+                        JOptionPane.showMessageDialog(null, "Deletado com sucesso.");
+                        tableModel.setRowCount(0);
                     } else {
-                        resultadoTxt.setText("Falha.");
+                        JOptionPane.showMessageDialog(null, "Falha ao deletar");
                     }
                 } catch (NumberFormatException ex) {
-                    resultadoTxt.setText("Insira novamente a matrícula.");
+                    JOptionPane.showMessageDialog(null, "Insira novamente a matricula.");
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -71,7 +75,7 @@ public class DeletarProfessorTela extends JPanel {
         form.add(matriculaLbl);
         form.add(matriculaTxt);
         form.add(pesquisar);
-        form.add(resultadoTxt);
+        form.add(tableProfessor);
         form.add(apagarProfessor);
 
         panel.add(form, BorderLayout.CENTER);

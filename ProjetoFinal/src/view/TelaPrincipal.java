@@ -7,6 +7,7 @@ import view.components.professor.AdicionarProfessorTela;
 import view.components.professor.DeletarProfessorTela;
 import view.components.professor.ListarProfessorTela;
 import view.components.turma.AdicionarTurmaTela;
+import view.components.turma.AlunosPorTurmaTela;
 import view.components.turma.DeletarTurmaTela;
 import view.components.turma.ListarTurmaTela;
 
@@ -30,6 +31,7 @@ public class TelaPrincipal {
     AdicionarAlunoTela addAlunoTela;
     ListarAlunoTela listAlunoTela;
     DeletarAlunoTela delAlunoTela;
+    AlunosPorTurmaTela turmasTela;
 
     public TelaPrincipal() {
         //Cria JFrame para a aplicação
@@ -61,8 +63,10 @@ public class TelaPrincipal {
         JMenuItem addTurma = new JMenuItem("Matricular Turma");
         JMenuItem listTurma = new JMenuItem("Pesquisar Turmas");
         JMenuItem deleteTurma = new JMenuItem("Deletar Turma");
+        JMenuItem alunosPorTurma = new JMenuItem("Buscar alunos por turma");
         turmas.add(addTurma);
         turmas.add(listTurma);
+        turmas.add(alunosPorTurma);
         turmas.addSeparator();
         turmas.add(deleteTurma);
 
@@ -176,6 +180,26 @@ public class TelaPrincipal {
                 cardPanel.repaint();
 
                 cardLayout.show(cardPanel, "telaAdicionarTurma");
+            }
+        });
+
+        alunosPorTurma.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    turmasTela = new AlunosPorTurmaTela();
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                } catch (ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
+                cardPanel.removeAll();
+                cardPanel.add(turmasTela);
+
+                cardPanel.revalidate();
+                cardPanel.repaint();
+
+                cardLayout.show(cardPanel, "telaListarAlunosTurma");
             }
         });
 

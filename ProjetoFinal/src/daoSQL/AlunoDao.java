@@ -4,7 +4,6 @@ import database.ConFactory;
 import model.Aluno;
 import model.Boletim;
 import model.Professor;
-import org.checkerframework.checker.units.qual.C;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AlunoDao {
-    private Connection connection;
+    public Connection connection;
 
     public AlunoDao() throws SQLException, ClassNotFoundException {
         connection = new ConFactory().getConnection();
@@ -112,5 +111,17 @@ public class AlunoDao {
             boletim.add(new Boletim(nome, idDisciplina, nota));
         }
         return boletim;
+    }
+
+    public boolean updateAluno(Aluno aluno) throws SQLException{
+        String sql = "UPDATE aluno SET email=?, nome=?, cpf=?, dataNascimento=? WHERE matricula=?";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, aluno.getEmail());
+        statement.setString(2, aluno.getNome());
+        statement.setString(3, aluno.getCpf());
+        statement.setDate(4, java.sql.Date.valueOf(aluno.getDataNascimento()));
+        statement.setInt(5, aluno.getMatricula());
+
+        return statement.executeUpdate()>0;
     }
 }

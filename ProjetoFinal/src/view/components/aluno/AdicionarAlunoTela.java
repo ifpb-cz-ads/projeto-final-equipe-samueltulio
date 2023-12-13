@@ -1,7 +1,10 @@
 package view.components.aluno;
 
 import daoSQL.AlunoDao;
+import daoSQL.ProfessorDao;
 import model.Aluno;
+import model.Professor;
+import model.StaticMethods;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class AdicionarAlunoTela extends JPanel {
     public AdicionarAlunoTela() {
@@ -31,7 +35,7 @@ public class AdicionarAlunoTela extends JPanel {
         form.add(txtEmail);
 
         JLabel jlbCpf = new JLabel("CPF:");
-        JTextField txtCpf = new JTextField();
+        JTextField txtCpf = new JFormattedTextField(StaticMethods.getCpfFormatter());
         form.add(jlbCpf);
         form.add(txtCpf);
 
@@ -41,7 +45,7 @@ public class AdicionarAlunoTela extends JPanel {
         form.add(txtMatricula);
 
         JLabel jlbNascimento = new JLabel("Data de nascimento:");
-        JTextField txtNascimento = new JTextField();
+        JTextField txtNascimento = new JFormattedTextField(StaticMethods.getDateFormatter());
         form.add(jlbNascimento);
         form.add(txtNascimento);
 
@@ -54,21 +58,64 @@ public class AdicionarAlunoTela extends JPanel {
         btnSalvar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String nome = txtNome.getText();
-                String email = txtEmail.getText();
-                String cpf = txtCpf.getText();
-                int matricula = Integer.parseInt(txtMatricula.getText());
-                String nascimentoString = txtNascimento.getText();
-                LocalDate nascimento = LocalDate.parse(nascimentoString, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+//                String nome = txtNome.getText();
+//                String email = txtEmail.getText();
+//                String cpf = txtCpf.getText();
+//                int matricula = Integer.parseInt(txtMatricula.getText());
+//                String nascimentoString = txtNascimento.getText();
+//                LocalDate nascimento = LocalDate.parse(nascimentoString, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+//
+//                Aluno aluno = new Aluno(email, nome, cpf, matricula, nascimento);
+//                try {
+//                    AlunoDao adao = new AlunoDao();
+//                    adao.addAluno(aluno);
+//                } catch (SQLException ex) {
+//                    throw new RuntimeException(ex);
+//                } catch (ClassNotFoundException ex) {
+//                    throw new RuntimeException(ex);
+//                }
 
-                Aluno aluno = new Aluno(email, nome, cpf, matricula, nascimento);
                 try {
-                    AlunoDao adao = new AlunoDao();
-                    adao.addAluno(aluno);
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                } catch (ClassNotFoundException ex) {
-                    throw new RuntimeException(ex);
+                    String nome = txtNome.getText();
+                    String email = txtEmail.getText();
+                    String cpf = txtCpf.getText();
+                    int matricula = Integer.parseInt(txtMatricula.getText());
+                    String nascimentoString = txtNascimento.getText();
+                    LocalDate nascimento = LocalDate.parse(nascimentoString, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                    Aluno aluno = new Aluno(email, nome, cpf, matricula, nascimento);
+
+                    if (nome.isEmpty()) {
+                        throw new IllegalArgumentException("O campo de nome não pode ser vazio.");
+                    }
+
+                    if (email.isEmpty()) {
+                        throw new IllegalArgumentException("O campo de email não pode ser vazio.");
+                    }
+
+                    if (cpf.isEmpty()) {
+                        throw new IllegalArgumentException("O campo de CPF não pode ser vazio.");
+                    }
+
+                    if (matricula <= 0) {
+                        throw new IllegalArgumentException("A matrícula deve ser um número positivo.");
+                    }
+
+                    try {
+                        AlunoDao adao = new AlunoDao();
+                        if(adao.addAluno(aluno)) {
+                            JOptionPane.showMessageDialog(null, "Adicionado com sucesso.");
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Erro ao adicionar.");
+                        }
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    } catch (ClassNotFoundException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                } catch (DateTimeParseException | IllegalArgumentException exp) {
+                    JOptionPane.showMessageDialog(null, "Erro no preenchimento do formulário: " + exp.getMessage());
+                } catch (Exception exp) {
+                    JOptionPane.showMessageDialog(null, "Por favor, revise seu formulário.");
                 }
 
             }

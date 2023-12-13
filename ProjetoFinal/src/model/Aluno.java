@@ -15,7 +15,4 @@ public class Aluno extends Pessoa implements Serializable {
         super(nome, matricula);
     }
 
-//    public Aluno(String nome, int matricula) {
-//        super(nome, matricula);
-//    }
 }

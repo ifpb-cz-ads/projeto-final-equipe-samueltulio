@@ -2,7 +2,6 @@ package daoSQL;
 
 import database.ConFactory;
 import model.Aluno;
-import model.Professor;
 import model.Turma;
 
 import java.sql.Connection;
@@ -11,10 +10,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.PropertyPermission;
 
 public class TurmaDao {
-    private Connection connection;
+    public Connection connection;
 
     public TurmaDao() throws SQLException, ClassNotFoundException {
         connection = new ConFactory().getConnection();
@@ -97,5 +95,16 @@ public class TurmaDao {
 
         int rowsAfected = statement.executeUpdate();
         return rowsAfected > 0;
+    }
+
+    public boolean updateTurma(Turma turma) throws SQLException {
+        String sql = "UPDATE turma SET idturma=?, serie=?, anoletivo=? WHERE idturma=?";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, turma.getIdTurma());
+        statement.setString(2, turma.getSerie());
+        statement.setInt(3, turma.getAnoLetivo());
+        statement.setInt(4, turma.getIdTurma());
+
+        return statement.executeUpdate()>0;
     }
 }

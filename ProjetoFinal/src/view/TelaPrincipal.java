@@ -1,11 +1,13 @@
 package view;
 
+import model.Turma;
 import view.components.aluno.AdicionarAlunoTela;
 import view.components.aluno.DeletarAlunoTela;
 import view.components.aluno.ListarAlunoTela;
 import view.components.professor.AdicionarProfessorTela;
 import view.components.professor.DeletarProfessorTela;
 import view.components.professor.ListarProfessorTela;
+import view.components.professor.TurmaProfessor;
 import view.components.turma.AdicionarTurmaTela;
 import view.components.turma.AlunosPorTurmaTela;
 import view.components.turma.DeletarTurmaTela;
@@ -24,6 +26,7 @@ public class TelaPrincipal {
     private CardLayout cardLayout;
     AdicionarProfessorTela addProfessorTela;
     ListarProfessorTela listProfessorTela;
+    TurmaProfessor aliciarTurmasProfessores;
     DeletarProfessorTela delProfessorTela;
     AdicionarTurmaTela addTurmaTela;
     ListarTurmaTela listTurmaTela;
@@ -53,9 +56,11 @@ public class TelaPrincipal {
         //Adiciona botôes na aplicação, opções para professores
         JMenuItem addProfessor = new JMenuItem("Matricular Professor");
         JMenuItem listProfessor = new JMenuItem("Pesquisar Professores");
+        JMenuItem turmasProfessores = new JMenuItem("Selecionar turma");
         JMenuItem deleteProfessor = new JMenuItem("Deletar Professor");
         professores.add(addProfessor);
         professores.add(listProfessor);
+        professores.add(turmasProfessores);
         professores.addSeparator();
         professores.add(deleteProfessor);
 
@@ -126,6 +131,20 @@ public class TelaPrincipal {
                 cardPanel.repaint();
 
                 cardLayout.show(cardPanel, "telaListarProfessor");
+            }
+        });
+
+        turmasProfessores.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                aliciarTurmasProfessores = new TurmaProfessor();
+                cardPanel.removeAll();
+                cardPanel.add(aliciarTurmasProfessores);
+
+                cardPanel.revalidate();
+                cardPanel.repaint();
+
+                cardLayout.show(cardPanel, "telaTurmaProfessor");
             }
         });
 

@@ -86,7 +86,7 @@ public class TelaPrincipal {
         cardLayout.show(cardPanel, "Centro");
     }
 
-    private void exibirFormulario(String nomeFormulario) {
+    private void exibirFormulario(String nomeFormulario) throws SQLException, ClassNotFoundException {
         JPanel formulario = null;
 
         switch (nomeFormulario) {
@@ -105,6 +105,10 @@ public class TelaPrincipal {
             case "formularioTurmaProfessor":
                 aliciarTurmasProfessores = new TurmaProfessor();
                 formulario = aliciarTurmasProfessores;
+                break;
+            case "formularioDeletarProfessor":
+                delProfessorTela = new DeletarProfessorTela();
+                formulario = delProfessorTela;
                 break;
             case "formularioAdicionarTurma":
                 addTurmaTela = new AdicionarTurmaTela();
@@ -181,28 +185,52 @@ public class TelaPrincipal {
         addProfessor.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                exibirFormulario("formularioMatriculaProfessor");
+                try {
+                    exibirFormulario("formularioMatriculaProfessor");
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                } catch (ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 
         listProfessor.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                exibirFormulario("formularioListarProfessor");
+                try {
+                    exibirFormulario("formularioListarProfessor");
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                } catch (ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 
         turmasProfessores.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                exibirFormulario("formularioTurmaProfessor");
+                try {
+                    exibirFormulario("formularioTurmaProfessor");
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                } catch (ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 
         deleteProfessor.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                exibirFormulario("formularioDeletarProfessor");
+                try {
+                    exibirFormulario("formularioDeletarProfessor");
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                } catch (ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 
@@ -225,10 +253,42 @@ public class TelaPrincipal {
         turmas.addSeparator();
         turmas.add(deleteTurma);
 
-        addTurma.addActionListener(e -> exibirFormulario("formularioAdicionarTurma"));
-        listTurma.addActionListener(e -> exibirFormulario("formularioListarTurma"));
-        alunosPorTurma.addActionListener(e -> exibirFormulario("formularioListarAlunosTurma"));
-        deleteTurma.addActionListener(e -> exibirFormulario("formularioDeletarTurma"));
+        addTurma.addActionListener(e -> {
+            try {
+                exibirFormulario("formularioAdicionarTurma");
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            } catch (ClassNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+        listTurma.addActionListener(e -> {
+            try {
+                exibirFormulario("formularioListarTurma");
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            } catch (ClassNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+        alunosPorTurma.addActionListener(e -> {
+            try {
+                exibirFormulario("formularioListarAlunosTurma");
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            } catch (ClassNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+        deleteTurma.addActionListener(e -> {
+            try {
+                exibirFormulario("formularioDeletarTurma");
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            } catch (ClassNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
 
         return turmas;
     }
@@ -245,9 +305,33 @@ public class TelaPrincipal {
         alunos.addSeparator();
         alunos.add(deleteAluno);
 
-        addAluno.addActionListener(e -> exibirFormulario("formularioAdicionarAluno"));
-        listAluno.addActionListener(e -> exibirFormulario("formularioListarAluno"));
-        deleteAluno.addActionListener(e -> exibirFormulario("formularioDeletarAluno"));
+        addAluno.addActionListener(e -> {
+            try {
+                exibirFormulario("formularioAdicionarAluno");
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            } catch (ClassNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+        listAluno.addActionListener(e -> {
+            try {
+                exibirFormulario("formularioListarAluno");
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            } catch (ClassNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+        deleteAluno.addActionListener(e -> {
+            try {
+                exibirFormulario("formularioDeletarAluno");
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            } catch (ClassNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
 
         return alunos;
     }
@@ -263,7 +347,7 @@ public class TelaPrincipal {
         return sair;
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(TelaPrincipal::new);
-    }
+//    public static void main(String[] args) {
+//        SwingUtilities.invokeLater(TelaPrincipal::new);
+//    }
 }

@@ -1,18 +1,19 @@
 package view;
 
 import view.components.aluno.AdicionarAlunoTela;
-import view.components.aluno.ListarAlunoTela;
 import view.components.aluno.DeletarAlunoTela;
+import view.components.aluno.ListarAlunoTela;
 import view.components.professor.AdicionarProfessorTela;
 import view.components.professor.DeletarProfessorTela;
 import view.components.professor.ListarProfessorTela;
 import view.components.professor.TurmaProfessor;
 import view.components.turma.AdicionarTurmaTela;
 import view.components.turma.AlunosPorTurmaTela;
-import view.components.turma.ListarTurmaTela;
 import view.components.turma.DeletarTurmaTela;
+import view.components.turma.ListarTurmaTela;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -35,31 +36,30 @@ public class TelaPrincipal {
     DeletarAlunoTela delAlunoTela;
     AlunosPorTurmaTela turmasTela;
 
-
     public TelaPrincipal() {
-            // Cria JFrame para a aplicação
-            ImageIcon icon = new ImageIcon("aluna.png");
-            jfrm = new JFrame("SysSchool");
-            jfrm.setIconImage(icon.getImage());
-            jfrm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // Cria JFrame para a aplicação
+        ImageIcon icon = new ImageIcon("aluna.png");
+        jfrm = new JFrame("SysSchool");
+        jfrm.setIconImage(icon.getImage());
+        jfrm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-            // Configuração do cardLayout
-            cardPanel = new JPanel();
-            cardLayout = new CardLayout();
-            cardPanel.setLayout(cardLayout);
+        // Configuração do cardLayout
+        cardPanel = new JPanel();
+        cardLayout = new CardLayout();
+        cardPanel.setLayout(cardLayout);
 
-            // Configuração do menu
-            JMenuBar jmbar = new JMenuBar();
-            jmbar.add(criarMenuProfessores());
-            jmbar.add(criarMenuTurmas());
-            jmbar.add(criarMenuAlunos());
-            jmbar.add(criarMenuSair());
+        // Configuração do menu
+        JMenuBar jmbar = new JMenuBar();
+        jmbar.add(criarMenuProfessores());
+        jmbar.add(criarMenuTurmas());
+        jmbar.add(criarMenuAlunos());
+        jmbar.add(criarMenuSair());
 
-            jfrm.setJMenuBar(jmbar);
-            jfrm.add(cardPanel, BorderLayout.CENTER);
-            jfrm.setSize(800, 600);
-            jfrm.setLocationRelativeTo(null); // Centraliza a janela na tela
-            jfrm.setVisible(true);
+        jfrm.setJMenuBar(jmbar);
+        jfrm.add(cardPanel, BorderLayout.CENTER);
+        jfrm.setSize(800, 600);
+        jfrm.setLocationRelativeTo(null); // Centraliza a janela na tela
+        jfrm.setVisible(true);
     }
 
     private void centralizarFormulario(JPanel formulario) {
@@ -69,7 +69,12 @@ public class TelaPrincipal {
         gbc.gridy = 0;
         gbc.insets = new Insets(10, 10, 10, 10); // Adiciona margens
 
-        painelCentral.add(formulario, gbc);
+        // Adiciona uma borda ao redor do formulário
+        JPanel painelComBorda = new JPanel(new BorderLayout());
+        painelComBorda.setBorder(BorderFactory.createLineBorder(Color.BLACK)); // Adiciona a borda preta
+        painelComBorda.add(formulario, BorderLayout.CENTER);
+
+        painelCentral.add(painelComBorda, gbc);
 
         cardPanel.add(painelCentral, "Centro");
         cardLayout.show(cardPanel, "Centro");
@@ -148,8 +153,9 @@ public class TelaPrincipal {
                 // Se o nome do formulário não for reconhecido, não faz nada
         }
 
-        centralizarFormulario(formulario);
-        cardLayout.show(cardPanel, "Centro");
+        if (formulario != null) {
+            centralizarFormulario(formulario);
+        }
     }
 
     private JMenu criarMenuProfessores() {

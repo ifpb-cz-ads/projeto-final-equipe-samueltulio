@@ -11,8 +11,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 public class AdicionarProfessorTela extends JPanel {
@@ -20,7 +18,7 @@ public class AdicionarProfessorTela extends JPanel {
     public AdicionarProfessorTela() {
         // Painel para organizar os componentes
         JPanel form = new JPanel();
-        form.setLayout(new GridLayout(6, 2));
+        form.setLayout(new GridLayout(7, 2));
 
         // Componentes
         JLabel jlbNome = new JLabel("Nome:");
@@ -53,12 +51,14 @@ public class AdicionarProfessorTela extends JPanel {
         form.add(jlbSalario);
         form.add(txtSalario);
 
+        // Adiciona o botão "Salvar" na parte inferior do formulário
         JButton btnSalvar = new JButton("Salvar");
+        form.add(new JLabel()); // Espaço vazio para ocupar a célula da grade
+        form.add(btnSalvar);
 
         // Adiciona o formulário diretamente ao centro do JPanel usando FlowLayout para centralizar
         setLayout(new FlowLayout(FlowLayout.CENTER));
         add(form);
-        add(btnSalvar);
 
         btnSalvar.addActionListener(new ActionListener() {
             @Override
@@ -72,6 +72,17 @@ public class AdicionarProfessorTela extends JPanel {
                     JOptionPane.showMessageDialog(null, "Por favor, revise seu formulário.");
                 }
             }
+        });
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            JFrame frame = new JFrame("Exemplo");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.getContentPane().add(new AdicionarProfessorTela());
+            frame.setSize(400, 400);
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
         });
     }
 }

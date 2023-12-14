@@ -56,6 +56,12 @@ public class TelaPrincipal {
         jmbar.add(criarMenuSair());
 
         jfrm.setJMenuBar(jmbar);
+
+        // Adicione estas linhas para alterar a cor de fundo ou adicionar uma imagem de fundo
+        cardPanel.setBackground(Color.LIGHT_GRAY); // ou qualquer cor desejada
+        // OU
+        cardPanel.add(new JLabel(new ImageIcon("/home/ftulioalmeida/IdeaProjects/projeto-final-equipe-samueltulio/ProjetoFinal/dev.jpg")));
+
         jfrm.add(cardPanel, BorderLayout.CENTER);
         jfrm.setSize(800, 600);
         jfrm.setLocationRelativeTo(null); // Centraliza a janela na tela
@@ -172,13 +178,38 @@ public class TelaPrincipal {
         professores.addSeparator();
         professores.add(deleteProfessor);
 
-        addProfessor.addActionListener(e -> exibirFormulario("formularioMatriculaProfessor"));
-        listProfessor.addActionListener(e -> exibirFormulario("formularioListarProfessor"));
-        turmasProfessores.addActionListener(e -> exibirFormulario("formularioTurmaProfessor"));
-        deleteProfessor.addActionListener(e -> exibirFormulario("formularioDeletarProfessor"));
+        addProfessor.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                exibirFormulario("formularioMatriculaProfessor");
+            }
+        });
+
+        listProfessor.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                exibirFormulario("formularioListarProfessor");
+            }
+        });
+
+        turmasProfessores.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                exibirFormulario("formularioTurmaProfessor");
+            }
+        });
+
+        deleteProfessor.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                exibirFormulario("formularioDeletarProfessor");
+            }
+        });
 
         return professores;
     }
+
+
 
     private JMenu criarMenuTurmas() {
         JMenu turmas = new JMenu("Turmas");

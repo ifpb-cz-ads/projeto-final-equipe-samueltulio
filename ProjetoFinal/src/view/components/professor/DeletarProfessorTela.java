@@ -100,7 +100,7 @@ public class DeletarProfessorTela extends JPanel {
         apagarProfessor.setBorder(BorderFactory.createEmptyBorder(10, borderRadius, 10, borderRadius));
 
         int formWidth = 500; // ajuste conforme necessário
-        int formHeight = 400; // ajuste conforme necessário
+        int formHeight = 300; // ajuste conforme necessário
         form.setPreferredSize(new Dimension(formWidth, formHeight));
         form.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createEmptyBorder(10, 10, 10, 10), // margens internas

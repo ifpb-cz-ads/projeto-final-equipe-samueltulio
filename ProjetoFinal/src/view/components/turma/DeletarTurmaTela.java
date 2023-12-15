@@ -22,12 +22,20 @@ public class DeletarTurmaTela extends JPanel {
         JPanel form = new JPanel();
         form.setLayout(new GridLayout(5, 1));
 
+        Color backgroundColor = Color.decode("#FBF7F4");
+        panel.setBackground(backgroundColor);
+        form.setBackground(backgroundColor);
+
         tDao = new TurmaDao();
         listTurmas = tDao.listTurma();
 
         JLabel idLbl = new JLabel("Informe o identificador da turma");
         JTextField idTxt = new JTextField();
+
         JButton pesquisar = new JButton("Pesquisar");
+        Color buttonColor = Color.decode("#E8998D");
+        pesquisar.setBackground(buttonColor);
+        pesquisar.setForeground(Color.WHITE);
 
         DefaultTableModel tableModel = new DefaultTableModel(colNames, 0);
         JTable tableTurma = new JTable(tableModel);
@@ -49,9 +57,11 @@ public class DeletarTurmaTela extends JPanel {
         });
 
 
-        JButton apagarProfessor = new JButton("Apagar");
+        JButton apagarTurma = new JButton("Apagar");
+        apagarTurma.setBackground(buttonColor);
+        apagarTurma.setForeground(Color.WHITE);
 
-        apagarProfessor.addActionListener(new ActionListener() {
+        apagarTurma.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -74,10 +84,30 @@ public class DeletarTurmaTela extends JPanel {
         form.add(idTxt);
         form.add(pesquisar);
         form.add(tableTurma);
-        form.add(apagarProfessor);
+        form.add(apagarTurma);
+
+        Font font = new Font("Arial", Font.PLAIN, 14);
+        idTxt.setFont(font);
+        idLbl.setFont(font);
+        pesquisar.setFont(font);
+        tableTurma.setFont(font);
+        apagarTurma.setFont(font);
+
+        int borderRadius = 15; // Ajuste conforme necessário
+        pesquisar.setBorder(BorderFactory.createEmptyBorder(10, borderRadius, 10, borderRadius));
+        apagarTurma.setBorder(BorderFactory.createEmptyBorder(10, borderRadius, 10, borderRadius));
+
+        int formWidth = 500; // ajuste conforme necessário
+        int formHeight = 300; // ajuste conforme necessário
+        form.setPreferredSize(new Dimension(formWidth, formHeight));
+        form.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createEmptyBorder(10, 10, 10, 10), // margens internas
+                BorderFactory.createLineBorder(Color.BLACK) // borda preta
+        ));
 
         panel.add(form, BorderLayout.CENTER);
 
+        setBackground(backgroundColor);
         add(panel, BorderLayout.CENTER);
 
     }

@@ -1,7 +1,9 @@
 package view.components.turma;
 
+import daoSQL.ProfessorDao;
 import daoSQL.TurmaDao;
 import model.Aluno;
+import model.Professor;
 import model.Turma;
 
 import javax.swing.*;
@@ -12,6 +14,7 @@ import java.sql.SQLException;
 public class AlunosPorTurmaTela extends JPanel {
     String[] colNames = {"Nome", "Matrícula"};
     TurmaDao tDao;
+    ProfessorDao pDao;
     java.util.List<Aluno> listAluno;
 
     JComboBox<String> turmaComboBox;
@@ -25,6 +28,10 @@ public class AlunosPorTurmaTela extends JPanel {
         panel.setLayout(new BorderLayout());
         JPanel tablePane = new JPanel();
         tablePane.setLayout(new BorderLayout());
+
+        Color backgroundColor = Color.decode("#FBF7F4");
+        panel.setBackground(backgroundColor);
+        tablePane.setBackground(backgroundColor);
 
         turmaComboBox = new JComboBox<>();
         turmaComboBox.addItem("Escolha uma turma");
@@ -48,12 +55,26 @@ public class AlunosPorTurmaTela extends JPanel {
             turmaComboBox.setSelectedIndex(0);
         }
 
+        Font font = new Font("Arial", Font.PLAIN, 14);
+        tableAluno.setFont(font);
+        turmaComboBox.setForeground(Color.WHITE);
+        turmaComboBox.setBackground(backgroundColor);
+
         JScrollPane scroll = new JScrollPane(tableAluno);
         tablePane.add(scroll, BorderLayout.CENTER);
         panel.add(turmaComboBox, BorderLayout.NORTH);
         panel.add(tablePane, BorderLayout.CENTER);
 
+        int formWidth = 900; // ajuste conforme necessário
+        int formHeight = 700; // ajuste conforme necessário
+        panel.setPreferredSize(new Dimension(formWidth, formHeight));
+        panel.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createEmptyBorder(10, 10, 10, 10), // margens internas
+                BorderFactory.createLineBorder(Color.BLACK) // borda preta
+        ));
+
         // Adiciona o JScrollPane ao JPanel
+        setBackground(backgroundColor);
         add(panel, BorderLayout.CENTER);
     }
 

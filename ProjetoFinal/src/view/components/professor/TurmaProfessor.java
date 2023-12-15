@@ -56,6 +56,7 @@ public class TurmaProfessor extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+                    pDao = new ProfessorDao();
                     tableModelProfessor.setRowCount(0);
                     int mat = Integer.parseInt(txtProfessor.getText());
                     Professor professor = pDao.searchProfessor(mat);
@@ -66,6 +67,8 @@ public class TurmaProfessor extends JPanel {
                     JOptionPane.showMessageDialog(null, "Professor não encontrado.");
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
+                } catch (ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
                 }
             }
         });
@@ -74,6 +77,7 @@ public class TurmaProfessor extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+                    tDao = new TurmaDao();
                     tableModelTurma.setRowCount(0);
                     int mat = Integer.parseInt(txtTurma.getText());
                     Turma turma = tDao.searchTurma(mat);
@@ -82,6 +86,8 @@ public class TurmaProfessor extends JPanel {
                     // Tratamento para entrada inválida de matrícula
                     JOptionPane.showMessageDialog(null, "Turma não encontrada.");
                 } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                } catch (ClassNotFoundException ex) {
                     throw new RuntimeException(ex);
                 }
             }
@@ -105,7 +111,7 @@ public class TurmaProfessor extends JPanel {
         pesquisarProfessor.setBorder(BorderFactory.createEmptyBorder(10, borderRadius, 10, borderRadius));
         pesquisarTurma.setBorder(BorderFactory.createEmptyBorder(10, borderRadius, 10, borderRadius));
 
-        int formWidth = 500; // ajuste conforme necessário
+        int formWidth = 700; // ajuste conforme necessário
         int formHeight = 400; // ajuste conforme necessário
         form.setPreferredSize(new Dimension(formWidth, formHeight));
         form.setBorder(BorderFactory.createCompoundBorder(

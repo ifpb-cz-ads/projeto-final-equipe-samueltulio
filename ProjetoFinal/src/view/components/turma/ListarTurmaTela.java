@@ -22,13 +22,21 @@ public class ListarTurmaTela extends JPanel {
         tDao = new TurmaDao();
         listTurmas = (java.util.List<Turma>) tDao.listTurma();
 
+        Font font = new Font("Arial", Font.PLAIN, 14);
+
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
         JPanel tablePane = new JPanel();
         tablePane.setLayout(new BorderLayout());
 
+        Color backgroundColor = Color.decode("#FBF7F4");
+        panel.setBackground(backgroundColor);
+        tablePane.setBackground(backgroundColor);
+
         DefaultTableModel tableModel = new DefaultTableModel(colNames, 0);
         JTable tableTurmas = new JTable(tableModel);
+        tableTurmas.setBackground(backgroundColor);
+        tableTurmas.setFont(font);
 
         // Adiciona os dados da lista à tabela
         for (Turma turma : listTurmas) {
@@ -81,6 +89,24 @@ public class ListarTurmaTela extends JPanel {
         panel.add(tablePane, BorderLayout.CENTER);
         panel.add(atualizar, BorderLayout.SOUTH);
 
+        tableTurmas.setFont(font);
+        atualizar.setForeground(Color.WHITE);
+        atualizar.setBackground(backgroundColor);
+
+        int borderRadius = 15; // Ajuste conforme necessário
+        atualizar.setBorder(BorderFactory.createEmptyBorder(10, borderRadius, 10, borderRadius));
+        atualizar.setBackground(backgroundColor);
+
+        int formWidth = 900; // ajuste conforme necessário
+        int formHeight = 700; // ajuste conforme necessário
+        panel.setPreferredSize(new Dimension(formWidth, formHeight));
+        panel.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createEmptyBorder(10, 10, 10, 10), // margens internas
+                BorderFactory.createLineBorder(Color.BLACK) // borda preta
+        ));
+
+        // Adiciona o JScrollPane ao JPanel
+        setBackground(backgroundColor);
         // Adiciona o JScrollPane ao JPanel
         add(panel, BorderLayout.CENTER);
     }

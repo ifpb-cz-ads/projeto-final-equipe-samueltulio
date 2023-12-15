@@ -22,6 +22,8 @@ public class ListarProfessorTela extends JPanel {
         pDao = new ProfessorDao();
         listProfessor = pDao.listProfessor();
 
+        Font font = new Font("Arial", Font.PLAIN, 14);
+
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
         JPanel tablePane = new JPanel();
@@ -34,6 +36,8 @@ public class ListarProfessorTela extends JPanel {
         DefaultTableModel tableModel = new DefaultTableModel(colNames, 0);
         JTable tableProfessor = new JTable(tableModel);
         tableProfessor.setBackground(backgroundColor);
+        tableProfessor.setBackground(backgroundColor);
+        tableProfessor.setFont(font);
 
         // Adiciona os dados da lista à tabela
         for (Professor professor : listProfessor) {
@@ -90,7 +94,6 @@ public class ListarProfessorTela extends JPanel {
         panel.add(tablePane, BorderLayout.CENTER);
         panel.add(atualizar, BorderLayout.SOUTH);
 
-        Font font = new Font("Arial", Font.PLAIN, 14);
         tableProfessor.setFont(font);
         atualizar.setForeground(Color.WHITE);
         atualizar.setBackground(backgroundColor);

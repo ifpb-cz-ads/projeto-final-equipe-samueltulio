@@ -142,8 +142,8 @@ public class AdicionarProfessorTela extends JPanel{
         int borderRadius = 15; // Ajuste conforme necessário
         btnSalvar.setBorder(BorderFactory.createEmptyBorder(10, borderRadius, 10, borderRadius));
 
-        int formWidth = 900; // ajuste conforme necessário
-        int formHeight = 700; // ajuste conforme necessário
+        int formWidth = 500; // ajuste conforme necessário
+        int formHeight = 300; // ajuste conforme necessário
         form.setPreferredSize(new Dimension(formWidth, formHeight));
         form.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createEmptyBorder(10, 10, 10, 10), // margens internas

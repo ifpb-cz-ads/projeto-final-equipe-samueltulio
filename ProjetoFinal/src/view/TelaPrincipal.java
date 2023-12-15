@@ -1,6 +1,5 @@
 package view;
 
-import model.Turma;
 import view.components.aluno.AdicionarAlunoTela;
 import view.components.aluno.DeletarAlunoTela;
 import view.components.aluno.ListarAlunoTela;
@@ -13,11 +12,12 @@ import view.components.turma.AlunosPorTurmaTela;
 import view.components.turma.DeletarTurmaTela;
 import view.components.turma.ListarTurmaTela;
 
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
-import javax.swing.*;
 
 public class TelaPrincipal {
 
@@ -37,80 +37,161 @@ public class TelaPrincipal {
     AlunosPorTurmaTela turmasTela;
 
     public TelaPrincipal() {
-        //Cria JFrame para a aplicação
+        // Cria JFrame para a aplicação
         ImageIcon icon = new ImageIcon("aluna.png");
         jfrm = new JFrame("SysSchool");
         jfrm.setIconImage(icon.getImage());
-        jfrm.setLayout(new BorderLayout());
         jfrm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        jfrm.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
+        // Configuração do cardLayout
+        cardPanel = new JPanel();
+        cardLayout = new CardLayout();
+        cardPanel.setLayout(cardLayout);
+
+        // Configuração do menu
         JMenuBar jmbar = new JMenuBar();
+        jmbar.add(criarMenuProfessores());
+        jmbar.add(criarMenuTurmas());
+        jmbar.add(criarMenuAlunos());
+        jmbar.add(criarMenuSair());
 
-        //Cria opções do menu
+        jfrm.setJMenuBar(jmbar);
+
+        // Adicione estas linhas para alterar a cor de fundo ou adicionar uma imagem de fundo
+        cardPanel.setBackground(Color.LIGHT_GRAY); // ou qualquer cor desejada
+        // OU
+        cardPanel.add(new JLabel(new ImageIcon("/home/ftulioalmeida/IdeaProjects/projeto-final-equipe-samueltulio/ProjetoFinal/dev.jpg")));
+
+        jfrm.add(cardPanel, BorderLayout.CENTER);
+        jfrm.setSize(800, 600);
+        jfrm.setLocationRelativeTo(null); // Centraliza a janela na tela
+        jfrm.setVisible(true);
+    }
+
+    private void centralizarFormulario(JPanel formulario) {
+        JPanel painelCentral = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.insets = new Insets(10, 10, 10, 10); // Adiciona margens
+
+        // Adiciona uma borda ao redor do formulário
+        JPanel painelComBorda = new JPanel(new BorderLayout());
+        painelComBorda.setBorder(BorderFactory.createLineBorder(Color.BLACK)); // Adiciona a borda preta
+        painelComBorda.add(formulario, BorderLayout.CENTER);
+
+        painelCentral.add(painelComBorda, gbc);
+
+        cardPanel.add(painelCentral, "Centro");
+        cardLayout.show(cardPanel, "Centro");
+    }
+
+    private void exibirFormulario(String nomeFormulario) throws SQLException, ClassNotFoundException {
+        JPanel formulario = null;
+
+        switch (nomeFormulario) {
+            case "formularioMatriculaProfessor":
+                addProfessorTela = new AdicionarProfessorTela();
+                formulario = addProfessorTela;
+                break;
+            case "formularioListarProfessor":
+                try {
+                    listProfessorTela = new ListarProfessorTela();
+                    formulario = listProfessorTela;
+                } catch (SQLException | ClassNotFoundException ex) {
+                    ex.printStackTrace();
+                }
+                break;
+            case "formularioTurmaProfessor":
+                aliciarTurmasProfessores = new TurmaProfessor();
+                formulario = aliciarTurmasProfessores;
+                break;
+            case "formularioDeletarProfessor":
+                delProfessorTela = new DeletarProfessorTela();
+                formulario = delProfessorTela;
+                break;
+            case "formularioAdicionarTurma":
+                addTurmaTela = new AdicionarTurmaTela();
+                formulario = addTurmaTela;
+                break;
+            case "formularioListarTurma":
+                try {
+                    listTurmaTela = new ListarTurmaTela();
+                    formulario = listTurmaTela;
+                } catch (SQLException | ClassNotFoundException ex) {
+                    ex.printStackTrace();
+                }
+                break;
+            case "formularioListarAlunosTurma":
+                try {
+                    turmasTela = new AlunosPorTurmaTela();
+                    formulario = turmasTela;
+                } catch (SQLException | ClassNotFoundException ex) {
+                    ex.printStackTrace();
+                }
+                break;
+            case "formularioDeletarTurma":
+                try {
+                    delTurmaTela = new DeletarTurmaTela();
+                    formulario = delTurmaTela;
+                } catch (SQLException | ClassNotFoundException ex) {
+                    ex.printStackTrace();
+                }
+                break;
+            case "formularioAdicionarAluno":
+                addAlunoTela = new AdicionarAlunoTela();
+                formulario = addAlunoTela;
+                break;
+            case "formularioListarAluno":
+                try {
+                    listAlunoTela = new ListarAlunoTela();
+                    formulario = listAlunoTela;
+                } catch (SQLException | ClassNotFoundException ex) {
+                    ex.printStackTrace();
+                }
+                break;
+            case "formularioDeletarAluno":
+                try {
+                    delAlunoTela = new DeletarAlunoTela();
+                    formulario = delAlunoTela;
+                } catch (SQLException | ClassNotFoundException ex) {
+                    ex.printStackTrace();
+                }
+                break;
+            // Adicione outros casos para formulários adicionais
+            default:
+                // Se o nome do formulário não for reconhecido, não faz nada
+        }
+
+        if (formulario != null) {
+            centralizarFormulario(formulario);
+        }
+    }
+
+    private JMenu criarMenuProfessores() {
         JMenu professores = new JMenu("Professores");
-        JMenu turmas = new JMenu("Turmas");
-        JMenu alunos = new JMenu("Alunos");
-        JMenu sair = new JMenu("Sair");
 
-        //Adiciona botôes na aplicação, opções para professores
         JMenuItem addProfessor = new JMenuItem("Matricular Professor");
         JMenuItem listProfessor = new JMenuItem("Pesquisar Professores");
         JMenuItem turmasProfessores = new JMenuItem("Selecionar turma");
         JMenuItem deleteProfessor = new JMenuItem("Deletar Professor");
+
         professores.add(addProfessor);
         professores.add(listProfessor);
         professores.add(turmasProfessores);
         professores.addSeparator();
         professores.add(deleteProfessor);
 
-        //Adiciona botôes na aplicação, opções para turmas
-        JMenuItem addTurma = new JMenuItem("Matricular Turma");
-        JMenuItem listTurma = new JMenuItem("Pesquisar Turmas");
-        JMenuItem deleteTurma = new JMenuItem("Deletar Turma");
-        JMenuItem alunosPorTurma = new JMenuItem("Buscar alunos por turma");
-        turmas.add(addTurma);
-        turmas.add(listTurma);
-        turmas.add(alunosPorTurma);
-        turmas.addSeparator();
-        turmas.add(deleteTurma);
-
-        //Adiciona botões na aplicação, opções para alunos
-        JMenuItem addAluno = new JMenuItem("Matricular Aluno");
-        JMenuItem listAluno = new JMenuItem("Pesquisar Aluno");
-        JMenuItem deleteAluno = new JMenuItem("Cancelar Matrícula");
-        alunos.add(addAluno);
-        alunos.add(listAluno);
-        alunos.addSeparator();
-        alunos.add(deleteAluno);
-
-        //Adiciona botões na aplicação, opção para sair
-        JMenuItem sairLogin = new JMenuItem("Sair da aplicação");
-        sair.add(sairLogin);
-
-        jmbar.add(professores);
-        jmbar.add(turmas);
-        jmbar.add(alunos);
-        jmbar.add(sair);
-
-        //Recurso para adicionar telas de acordo com opções do menu
-        //Adiciona no cardLayout (contido no cardPanel)
-        //Devo criar ainda as telas para cada interação
-        cardPanel = new JPanel();
-        cardLayout = new CardLayout();
-        cardPanel.setLayout(cardLayout);
-
         addProfessor.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                addProfessorTela = new AdicionarProfessorTela();
-                cardPanel.removeAll();
-                cardPanel.add(addProfessorTela);
-
-                cardPanel.revalidate();
-                cardPanel.repaint();
-
-                cardLayout.show(cardPanel, "telaMatriculaProfessor");
+                try {
+                    exibirFormulario("formularioMatriculaProfessor");
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                } catch (ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 
@@ -118,33 +199,25 @@ public class TelaPrincipal {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    listProfessorTela = new ListarProfessorTela();
+                    exibirFormulario("formularioListarProfessor");
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 } catch (ClassNotFoundException ex) {
                     throw new RuntimeException(ex);
                 }
-                cardPanel.removeAll();
-                cardPanel.add(listProfessorTela);
-
-                cardPanel.revalidate();
-                cardPanel.repaint();
-
-                cardLayout.show(cardPanel, "telaListarProfessor");
             }
         });
 
         turmasProfessores.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                aliciarTurmasProfessores = new TurmaProfessor();
-                cardPanel.removeAll();
-                cardPanel.add(aliciarTurmasProfessores);
-
-                cardPanel.revalidate();
-                cardPanel.repaint();
-
-                cardLayout.show(cardPanel, "telaTurmaProfessor");
+                try {
+                    exibirFormulario("formularioTurmaProfessor");
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                } catch (ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 
@@ -152,154 +225,111 @@ public class TelaPrincipal {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    delProfessorTela = new DeletarProfessorTela();
+                    exibirFormulario("formularioDeletarProfessor");
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 } catch (ClassNotFoundException ex) {
                     throw new RuntimeException(ex);
                 }
-                cardPanel.removeAll();
-                cardPanel.add(delProfessorTela);
-
-                cardPanel.revalidate();
-                cardPanel.repaint();
-
-                cardLayout.show(cardPanel, "telaDeletarProfessor");
             }
         });
 
-        addTurma.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                addTurmaTela = new AdicionarTurmaTela();
-                cardPanel.removeAll();
-                cardPanel.add(addTurmaTela);
+        return professores;
+    }
 
-                cardPanel.revalidate();
-                cardPanel.repaint();
 
-                cardLayout.show(cardPanel, "telaAdicionarTurma");
+
+    private JMenu criarMenuTurmas() {
+        JMenu turmas = new JMenu("Turmas");
+
+        JMenuItem addTurma = new JMenuItem("Matricular Turma");
+        JMenuItem listTurma = new JMenuItem("Pesquisar Turmas");
+        JMenuItem deleteTurma = new JMenuItem("Deletar Turma");
+        JMenuItem alunosPorTurma = new JMenuItem("Buscar alunos por turma");
+
+        turmas.add(addTurma);
+        turmas.add(listTurma);
+        turmas.add(alunosPorTurma);
+        turmas.addSeparator();
+        turmas.add(deleteTurma);
+
+        addTurma.addActionListener(e -> {
+            try {
+                exibirFormulario("formularioAdicionarTurma");
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            } catch (ClassNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+        listTurma.addActionListener(e -> {
+            try {
+                exibirFormulario("formularioListarTurma");
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            } catch (ClassNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+        alunosPorTurma.addActionListener(e -> {
+            try {
+                exibirFormulario("formularioListarAlunosTurma");
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            } catch (ClassNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+        deleteTurma.addActionListener(e -> {
+            try {
+                exibirFormulario("formularioDeletarTurma");
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            } catch (ClassNotFoundException ex) {
+                throw new RuntimeException(ex);
             }
         });
 
-        listTurma.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    listTurmaTela = new ListarTurmaTela();
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                } catch (ClassNotFoundException ex) {
-                    throw new RuntimeException(ex);
-                }
-                cardPanel.removeAll();
-                cardPanel.add(listTurmaTela);
+        return turmas;
+    }
 
-                cardPanel.revalidate();
-                cardPanel.repaint();
+    private JMenu criarMenuAlunos() {
+        JMenu alunos = new JMenu("Alunos");
 
-                cardLayout.show(cardPanel, "telaAdicionarTurma");
+        JMenuItem addAluno = new JMenuItem("Matricular Aluno");
+        JMenuItem listAluno = new JMenuItem("Pesquisar Aluno");
+        JMenuItem deleteAluno = new JMenuItem("Cancelar Matrícula");
+
+        alunos.add(addAluno);
+        alunos.add(listAluno);
+        alunos.addSeparator();
+        alunos.add(deleteAluno);
+
+        addAluno.addActionListener(e -> {
+            try {
+                exibirFormulario("formularioAdicionarAluno");
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            } catch (ClassNotFoundException ex) {
+                throw new RuntimeException(ex);
             }
         });
-
-        alunosPorTurma.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    turmasTela = new AlunosPorTurmaTela();
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                } catch (ClassNotFoundException ex) {
-                    throw new RuntimeException(ex);
-                }
-                cardPanel.removeAll();
-                cardPanel.add(turmasTela);
-
-                cardPanel.revalidate();
-                cardPanel.repaint();
-
-                cardLayout.show(cardPanel, "telaListarAlunosTurma");
+        listAluno.addActionListener(e -> {
+            try {
+                exibirFormulario("formularioListarAluno");
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            } catch (ClassNotFoundException ex) {
+                throw new RuntimeException(ex);
             }
         });
-
-        deleteTurma.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    delTurmaTela = new DeletarTurmaTela();
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                } catch (ClassNotFoundException ex) {
-                    throw new RuntimeException(ex);
-                }
-                cardPanel.removeAll();
-                cardPanel.add(delTurmaTela);
-
-                cardPanel.revalidate();
-                cardPanel.repaint();
-
-                cardLayout.show(cardPanel, "telaAdicionarTurma");
-            }
-        });
-
-        addAluno.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                addAlunoTela = new AdicionarAlunoTela();
-                cardPanel.removeAll();
-                cardPanel.add(addAlunoTela);
-
-                cardPanel.revalidate();
-                cardPanel.repaint();
-
-                cardLayout.show(cardPanel, "telaAdicionarAluno");
-            }
-        });
-
-        listAluno.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    listAlunoTela = new ListarAlunoTela();
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                } catch (ClassNotFoundException ex) {
-                    throw new RuntimeException(ex);
-                }
-                cardPanel.removeAll();
-                cardPanel.add(listAlunoTela);
-
-                cardPanel.revalidate();
-                cardPanel.repaint();
-
-                cardLayout.show(cardPanel, "telaListarAluno");
-            }
-        });
-
-        deleteAluno.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    delAlunoTela = new DeletarAlunoTela();
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                } catch (ClassNotFoundException ex) {
-                    throw new RuntimeException(ex);
-                }
-                cardPanel.removeAll();
-                cardPanel.add(delAlunoTela);
-
-                cardPanel.revalidate();
-                cardPanel.repaint();
-
-                cardLayout.show(cardPanel, "telaListarAluno");
-            }
-        });
-
-        sairLogin.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.exit(0);
+        deleteAluno.addActionListener(e -> {
+            try {
+                exibirFormulario("formularioDeletarAluno");
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            } catch (ClassNotFoundException ex) {
+                throw new RuntimeException(ex);
             }
         });
 
@@ -310,6 +340,10 @@ public class TelaPrincipal {
         jfrm.add(cardPanel, BorderLayout.CENTER);
         jfrm.setJMenuBar(jmbar);
         jfrm.setVisible(true);
+
     }
 
+//    public static void main(String[] args) {
+//        SwingUtilities.invokeLater(TelaPrincipal::new);
+//    }
 }

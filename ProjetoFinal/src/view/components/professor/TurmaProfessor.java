@@ -52,10 +52,14 @@ public class TurmaProfessor extends JPanel {
         JTable tableTurma = new JTable(tableModelTurma);
         form.add(tableTurma);
 
+        JButton aliciar = new JButton("Associar com turma");
+        form.add(aliciar);
+
         pesquisarProfessor.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+                    pDao = new ProfessorDao();
                     tableModelProfessor.setRowCount(0);
                     int mat = Integer.parseInt(txtProfessor.getText());
                     Professor professor = pDao.searchProfessor(mat);
@@ -66,6 +70,8 @@ public class TurmaProfessor extends JPanel {
                     JOptionPane.showMessageDialog(null, "Professor não encontrado.");
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
+                } catch (ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
                 }
             }
         });
@@ -74,6 +80,7 @@ public class TurmaProfessor extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+                    tDao = new TurmaDao();
                     tableModelTurma.setRowCount(0);
                     int mat = Integer.parseInt(txtTurma.getText());
                     Turma turma = tDao.searchTurma(mat);
@@ -82,6 +89,8 @@ public class TurmaProfessor extends JPanel {
                     // Tratamento para entrada inválida de matrícula
                     JOptionPane.showMessageDialog(null, "Turma não encontrada.");
                 } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                } catch (ClassNotFoundException ex) {
                     throw new RuntimeException(ex);
                 }
             }

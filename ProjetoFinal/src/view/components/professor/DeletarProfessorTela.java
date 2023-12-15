@@ -20,7 +20,7 @@ public class DeletarProfessorTela extends JPanel {
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
         JPanel form = new JPanel();
-        form.setLayout(new GridLayout(5, 1));
+        form.setLayout(new GridLayout(6, 1));
 
         Color backgroundColor = Color.decode("#FBF7F4");
         panel.setBackground(backgroundColor);

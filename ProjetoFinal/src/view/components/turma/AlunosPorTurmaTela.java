@@ -57,8 +57,7 @@ public class AlunosPorTurmaTela extends JPanel {
 
         Font font = new Font("Arial", Font.PLAIN, 14);
         tableAluno.setFont(font);
-        turmaComboBox.setForeground(Color.WHITE);
-        turmaComboBox.setBackground(backgroundColor);
+        turmaComboBox.setFont(font);
 
         JScrollPane scroll = new JScrollPane(tableAluno);
         tablePane.add(scroll, BorderLayout.CENTER);

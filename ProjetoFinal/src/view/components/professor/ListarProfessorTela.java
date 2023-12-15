@@ -95,7 +95,6 @@ public class ListarProfessorTela extends JPanel {
         panel.add(atualizar, BorderLayout.SOUTH);
 
         tableProfessor.setFont(font);
-        atualizar.setForeground(Color.WHITE);
         atualizar.setBackground(backgroundColor);
 
         int borderRadius = 15; // Ajuste conforme necessário

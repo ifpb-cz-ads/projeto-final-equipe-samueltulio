@@ -114,5 +114,3 @@ public class DeletarProfessorTela extends JPanel {
     }
 
 }
-
-

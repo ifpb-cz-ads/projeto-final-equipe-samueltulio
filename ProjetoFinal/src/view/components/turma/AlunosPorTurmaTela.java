@@ -10,17 +10,21 @@ import java.awt.*;
 import java.sql.SQLException;
 
 public class AlunosPorTurmaTela extends JPanel {
-    private String[] colNames = {"Nome", "Matrícula"};
-    private TurmaDao tDao;
-    private JComboBox<String> turmaComboBox;
-    private DefaultTableModel tableModel;
-    private JTable tableAluno;
+    String[] colNames = {"Nome", "Matrícula"};
+    TurmaDao tDao;
+    java.util.List<Aluno> listAluno;
+
+    JComboBox<String> turmaComboBox;
+    DefaultTableModel tableModel;
 
     public AlunosPorTurmaTela() throws SQLException, ClassNotFoundException {
         tDao = new TurmaDao();
         java.util.List<Turma> turmas = tDao.listTurma();
 
-        setLayout(new BorderLayout());
+        JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+        JPanel tablePane = new JPanel();
+        tablePane.setLayout(new BorderLayout());
 
         turmaComboBox = new JComboBox<>();
         turmaComboBox.addItem("Escolha uma turma");
@@ -29,13 +33,12 @@ public class AlunosPorTurmaTela extends JPanel {
         }
 
         this.tableModel = new DefaultTableModel(colNames, 0);
-        tableAluno = new JTable(this.tableModel);
-        JScrollPane scrollPane = new JScrollPane(tableAluno);
+        JTable tableAluno = new JTable(this.tableModel);
 
         turmaComboBox.addActionListener(e -> {
             try {
-                java.util.List<Aluno> listAluno = tDao.alunosTurma(turmaComboBox.getSelectedIndex());
-                updateTableData(listAluno);
+                listAluno = tDao.alunosTurma(turmaComboBox.getSelectedIndex());
+                updateTableData();
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
@@ -45,35 +48,20 @@ public class AlunosPorTurmaTela extends JPanel {
             turmaComboBox.setSelectedIndex(0);
         }
 
-        JPanel panel = new JPanel(new BorderLayout());
+        JScrollPane scroll = new JScrollPane(tableAluno);
+        tablePane.add(scroll, BorderLayout.CENTER);
         panel.add(turmaComboBox, BorderLayout.NORTH);
-        panel.add(scrollPane, BorderLayout.CENTER);
+        panel.add(tablePane, BorderLayout.CENTER);
 
-        // Adiciona o JPanel com JComboBox e JTable ao JPanel principal
+        // Adiciona o JScrollPane ao JPanel
         add(panel, BorderLayout.CENTER);
     }
 
-    private void updateTableData(java.util.List<Aluno> listAluno) {
+    private void updateTableData() {
         tableModel.setRowCount(0);
         for (Aluno aluno : listAluno) {
             tableModel.addRow(new Object[]{aluno.getNome(), aluno.getMatricula()});
         }
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            try {
-                JFrame frame = new JFrame("Teste AlunosPorTurmaTela");
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.setSize(400, 300);
-
-                AlunosPorTurmaTela alunosPorTurmaTela = new AlunosPorTurmaTela();
-                frame.add(alunosPorTurmaTela);
-
-                frame.setVisible(true);
-            } catch (SQLException | ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-        });
-    }
 }

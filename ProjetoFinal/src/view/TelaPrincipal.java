@@ -333,18 +333,14 @@ public class TelaPrincipal {
             }
         });
 
-        return alunos;
-    }
+        Color backgroundColor = Color.decode("#E8998D");
+        cardPanel.setBackground(backgroundColor);
+        jfrm.setBackground(backgroundColor);
 
-    private JMenu criarMenuSair() {
-        JMenu sair = new JMenu("Sair");
+        jfrm.add(cardPanel, BorderLayout.CENTER);
+        jfrm.setJMenuBar(jmbar);
+        jfrm.setVisible(true);
 
-        JMenuItem sairLogin = new JMenuItem("Sair da aplicação");
-        sair.add(sairLogin);
-
-        sairLogin.addActionListener(e -> System.exit(0));
-
-        return sair;
     }
 
 //    public static void main(String[] args) {

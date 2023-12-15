@@ -75,14 +75,45 @@ public class AdicionarProfessorTela extends JPanel {
         });
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame("Exemplo");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.getContentPane().add(new AdicionarProfessorTela());
-            frame.setSize(400, 400);
-            frame.setLocationRelativeTo(null);
-            frame.setVisible(true);
-        });
+        Color backgroundColor = Color.decode("#FBF7F4");
+        panel.setBackground(backgroundColor);
+        form.setBackground(backgroundColor);
+
+        Font font = new Font("Arial", Font.PLAIN, 14);
+        jlbNome.setFont(font);
+        txtNome.setFont(font);
+        jlbEmail.setFont(font);
+        txtEmail.setFont(font);
+        jlbCpf.setFont(font);
+        txtCpf.setFont(font);
+        jlbMatricula.setFont(font);
+        txtMatricula.setFont(font);
+        jlbNascimento.setFont(font);
+        txtNascimento.setFont(font);
+        jlbSalario.setFont(font);
+        txtSalario.setFont(font);
+
+        Color buttonColor = Color.decode("#E8998D");
+        btnSalvar.setBackground(buttonColor);
+
+        // Definindo a cor do texto no botão
+        btnSalvar.setForeground(Color.WHITE);
+
+        // Criando bordas arredondadas para o botão
+        int borderRadius = 15; // Ajuste conforme necessário
+        btnSalvar.setBorder(BorderFactory.createEmptyBorder(10, borderRadius, 10, borderRadius));
+
+        int formWidth = 900; // ajuste conforme necessário
+        int formHeight = 700; // ajuste conforme necessário
+        form.setPreferredSize(new Dimension(formWidth, formHeight));
+        form.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createEmptyBorder(10, 10, 10, 10), // margens internas
+                BorderFactory.createLineBorder(Color.BLACK) // borda preta
+        ));
+
+        // Adiciona o painel ao centro do JPanel
+        setBackground(backgroundColor);
+        add(panel, BorderLayout.CENTER);
+
     }
 }

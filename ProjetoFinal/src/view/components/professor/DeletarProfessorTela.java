@@ -22,12 +22,20 @@ public class DeletarProfessorTela extends JPanel {
         JPanel form = new JPanel();
         form.setLayout(new GridLayout(5, 1));
 
+        Color backgroundColor = Color.decode("#FBF7F4");
+        panel.setBackground(backgroundColor);
+        form.setBackground(backgroundColor);
+
         pDao = new ProfessorDao();
         listProfessor = pDao.listProfessor();
 
         JLabel matriculaLbl = new JLabel("Informe a matricula do professor");
         JTextField matriculaTxt = new JTextField();
+
         JButton pesquisar = new JButton("Pesquisar");
+        Color buttonColor = Color.decode("#E8998D");
+        pesquisar.setBackground(buttonColor);
+        pesquisar.setForeground(Color.WHITE);
 
         DefaultTableModel tableModel = new DefaultTableModel(colNames, 0);
         JTable tableProfessor = new JTable(tableModel);
@@ -52,6 +60,8 @@ public class DeletarProfessorTela extends JPanel {
 
 
         JButton apagarProfessor = new JButton("Apagar");
+        apagarProfessor.setBackground(buttonColor);
+        apagarProfessor.setForeground(Color.WHITE);
 
         apagarProfessor.addActionListener(new ActionListener() {
             @Override
@@ -78,8 +88,28 @@ public class DeletarProfessorTela extends JPanel {
         form.add(tableProfessor);
         form.add(apagarProfessor);
 
+        Font font = new Font("Arial", Font.PLAIN, 14);
+        matriculaTxt.setFont(font);
+        matriculaLbl.setFont(font);
+        pesquisar.setFont(font);
+        tableProfessor.setFont(font);
+        apagarProfessor.setFont(font);
+
+        int borderRadius = 15; // Ajuste conforme necessário
+        pesquisar.setBorder(BorderFactory.createEmptyBorder(10, borderRadius, 10, borderRadius));
+        apagarProfessor.setBorder(BorderFactory.createEmptyBorder(10, borderRadius, 10, borderRadius));
+
+        int formWidth = 500; // ajuste conforme necessário
+        int formHeight = 400; // ajuste conforme necessário
+        form.setPreferredSize(new Dimension(formWidth, formHeight));
+        form.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createEmptyBorder(10, 10, 10, 10), // margens internas
+                BorderFactory.createLineBorder(Color.BLACK) // borda preta
+        ));
+
         panel.add(form, BorderLayout.CENTER);
 
+        setBackground(backgroundColor);
         add(panel, BorderLayout.CENTER);
     }
 

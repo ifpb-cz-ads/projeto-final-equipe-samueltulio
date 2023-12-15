@@ -303,6 +303,10 @@ public class TelaPrincipal {
             }
         });
 
+        Color backgroundColor = Color.decode("#E8998D");
+        cardPanel.setBackground(backgroundColor);
+        jfrm.setBackground(backgroundColor);
+
         jfrm.add(cardPanel, BorderLayout.CENTER);
         jfrm.setJMenuBar(jmbar);
         jfrm.setVisible(true);
